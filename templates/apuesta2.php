@@ -165,7 +165,33 @@ EOT;
                                         <span class='red'><b>Si no recuerdas ninguno de los tres, envíanos un mail a</span> <a href='mailto:".$EMAIL_ADMIN."'>".$EMAIL_ADMIN."</a></b><br><br>
 					Rellena tu <b>apuesta</b>. Si marcas empate te preguntaremos quién pasa por penaltis. En estos casos los puntos por acertar el resultado sólo se dan si el ganador es el que tú dices.
 				</td>
-			</tr>
+			</tr>";
+
+    $query="SELECT id,fase FROM partido WHERE fase>1 ORDER BY id";
+    $res=mysql_query($query,$conexion);
+
+    $fase=0;
+
+    while ($arra=mysql_fetch_array($res)) {
+        if ($fase==0) {
+            echo "<tr>";
+            $fase=$arra["fase"];
+            $partido=0;
+        }
+        if ($fase!=$arra["fase"]) {
+            $fase=$arra["fase"];
+            $partido=0;
+            echo "<td height=20></td></tr><tr>";
+        }
+        $partido++;
+        echo "<td valign='top'>".fichaEliminatoria($arra["id"])."</td>";
+        if ($partido==4||($fase==4&&$partido==2)) {
+            echo "</tr><tr>";
+            $partido=0;
+        }
+    }
+
+    echo"
 			<tr>
 				<td valign='top'>".fichaEliminatoria(349)."</td><td valign='top'>".fichaEliminatoria(350)."</td><td valign='top'>".fichaEliminatoria(351)."</td><td valign='top'>".fichaEliminatoria(352)."</td>
 			</tr>
@@ -255,32 +281,17 @@ EOT;
 		var time = date.getTime();
 		winner = 0;
 
-		var arrayEliminatorias = new Array(362);
+		var arrayEliminatorias = new Array();
 
-		arrayEliminatorias[349] = "358_1";
-		arrayEliminatorias[350] = "358_2";
-		arrayEliminatorias[351] = "359_1";
-		arrayEliminatorias[352] = "359_2";
-		arrayEliminatorias[353] = "357_1";
-		arrayEliminatorias[354] = "357_2";
-		arrayEliminatorias[355] = "360_1";
-		arrayEliminatorias[356] = "360_2";
-
-		arrayEliminatorias[357] = "361_2";
-		arrayEliminatorias[358] = "361_1";
-		arrayEliminatorias[359] = "362_1";
-		arrayEliminatorias[360] = "362_2";
-
-		arrayEliminatorias[361] = "364_1";
-		arrayEliminatorias[362] = "364_2";
-
-                /*arrayEliminatorias[225] = "229_1";
-		arrayEliminatorias[226] = "230_1";
-		arrayEliminatorias[227] = "229_2";
-		arrayEliminatorias[228] = "230_2";
-
-		arrayEliminatorias[229] = "231_1";
-		arrayEliminatorias[230] = "231_2";*/
+        <?php
+            $query="SELECT id,vencedor_eliminatoria FROM partido WHERE vencedor_eliminatoria!='' ORDER BY id";
+            $res=mysql_query($query,$conexion);
+            while ($arra=mysql_fetch_array($res)) {
+            ?>
+                arrayEliminatorias[<?= $arra["id"] ?> = "<?= $arra["vencedor_eliminatoria"] ?>";
+        <?php
+            }
+        ?>
 
 		resultado1=$("#r_"+partido+"_1").val();
 		resultado2=$("#r_"+partido+"_2").val();
