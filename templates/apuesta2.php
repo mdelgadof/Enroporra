@@ -123,7 +123,7 @@ EOT;
 			$bandera2=WEB_ROOT."/images/badges/".$arra["bandera2"];
 		}
 
-		$content = "<span class='red'><b>".$id_partido."</b></span> ".$rotulo[$arra["fase"]]."<br>".date("d/m/Y H:i",strtotime($arra["fecha"]." ".$arra["hora"]))."<br>";
+		$content = "<span class='red'><b>".($id_partido%100)."</b></span> ".$rotulo[$arra["fase"]]."<br>".date("d/m/Y H:i",strtotime($arra["fecha"]." ".$arra["hora"]))."<br>";
 		$content.= "<table>";
 		$content.= "<tr><td><div id='b_".$id_partido."_1'><img src='".$bandera1."' width=22 height=22></div></td><td width=5></td><td><div id='n_".$id_partido."_1'><h2>".$nombre1."</h2></div></td><td width=5></td><td><input type='text' name='r_".$id_partido."_1' id='r_".$id_partido."_1' class='inputArea' style='height:20px; width:10px; font-size:20px;' maxlength=1 onBlur='siguienteEliminatoria(".$id_partido.",0)'></td></tr>";
 		$content.= "<tr><td><div id='b_".$id_partido."_2'><img src='".$bandera2."' width=22 height=22></div></td><td width=5></td><td><div id='n_".$id_partido."_2'><h2>".$nombre2."</h2></div></td><td width=5></td><td><input type='text' name='r_".$id_partido."_2' id='r_".$id_partido."_2' class='inputArea' style='height:20px; width:10px; font-size:20px;' maxlength=1 onBlur='siguienteEliminatoria(".$id_partido.",0)'></td></tr>";
