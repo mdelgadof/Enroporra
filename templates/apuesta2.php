@@ -104,7 +104,7 @@ EOT;
 		$res=mysql_query($query,$conexion);
 		$arra=mysql_fetch_array($res);
 
-		$rotulo=array("","","OCTAVOS","CUARTOS","SEMIS","FINAL");
+		$rotulo=array("","","OCTAVOS","CUARTOS","SEMIS","","FINAL");
 
 		if ($arra["id_equipo1"]==0) {
 			$nombre1="???";
