@@ -186,13 +186,13 @@ EOT;
         $partido++;
 
         if ($fase==4&&$partido==1) echo "<td></td>";
-        $tdfinal = ($fase==5) ? "colspan='4' align='center'":"";
+        $tdfinal = ($fase==6) ? "colspan='4' align='center'":"";
 
         echo "<td ".$tdfinal." valign='top'>".fichaEliminatoria($arra["id"])."</td>";
 
         if ($fase==4&&$partido==2) echo "<td></td>";
 
-        if ($partido==4||($fase==4&&$partido==2)||$fase==5) {
+        if ($partido==4||($fase==4&&$partido==2)||$fase==6) {
             echo "</tr><tr>";
             $partido=0;
         }
