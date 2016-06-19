@@ -14,7 +14,7 @@ else {
 	echo "<p>Aquí tienes un listado de todos los participantes de <b>Enroporra</b>. Selecciona a tus amigos y conocidos
 	(o a los que quieras) y, recargando la página, podrás ver la clasificación sólo con los nombres que tú hayas elegido.
 	Esperamos que te sirva, y te recordamos que esta clasificación parcial que se publica en AMIGOS no sirve a la hora de
-	repartir ningún premio, ya que para esto solo vale la <a href='clasificacion.php'>clasificación general</a></p>";
+	repartir ningún premio, ya que para esto sólo vale la <a href='clasificacion.php'>clasificación general</a></p>";
 }
 
 $query="SELECT * FROM porrista WHERE pagado='si' ORDER BY nombre,apellido";

@@ -11,9 +11,10 @@ You can also purchase a PSD-file for this template.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Enroporra - Eurocopa 2012</title>
+<title>Enroporra - <?= $NOMBRE_TORNEO ?></title>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <link href="css/headers<?= rand(1,12) ?>.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="http://www.uefa.com/imgml/favicon/comp/euro2016.ico" />
 </head>
 <body>
 <div id="container">
@@ -27,7 +28,7 @@ You can also purchase a PSD-file for this template.
               <li><a href="<?= $ENLACE_BASES ?>" target='_blank'>Bases</a></li>
               <li><a href="cuenta.php">Mi cuenta</a></li>
               <li><a href="amigos.php">Amigos</a></li>
-              <li><a href="clasificacion.php">Clasificación</a></li>
+              <li><a href="clasificacion.php">Clasificaci&oacute;n</a></li>
               <li><a href="<?= $ENLACE_PARTIDOS ?>">Partidos</a></li>
               <li><a href='mailto:<?= $EMAIL_ADMIN ?>'>Contacto</a></li>
           </ul>
@@ -47,45 +48,70 @@ You can also purchase a PSD-file for this template.
 				date_default_timezone_set("Europe/Madrid");
 
 				if (!$conexion) {
-					$excusa[0]="Nuestro servidor de base de datos se ha ido a tomar una caña al Enro. Vuelve en un rato.";
-					$excusa[1]="Nuestro servidor de base de datos ha ido al baño un momento. Maldita ensaladilla de chiringuito...";
-					$excusa[2]="Nuestro servidor de base de datos está viendo los resúmenes de los partidos, me ha dicho que ahora viene.";
-					$excusa[3]="A nuestro servidor de base de datos le han dicho que ya está bien de tanta Eurocopa y tanta historia y se ha ido con la novia a dar un paseo. Enseguida vuelve.";
+					$excusa[0]="Nuestro servidor de base de datos se ha ido a tomar una ca&ntilde;a al Enro. Vuelve en un rato.";
+					$excusa[1]="Nuestro servidor de base de datos ha ido al ba&ntilde;o un momento. Maldita ensaladilla de chiringuito...";
+					$excusa[2]="Nuestro servidor de base de datos est&aacute; viendo los res&uacute;menes de los partidos, me ha dicho que ahora viene.";
+					$excusa[3]="A nuestro servidor de base de datos le han dicho que ya est&aacute; bien de tanto Mundial y tanta historia y se ha ido con la novia a dar un paseo. Enseguida vuelve.";
 					echo "<h1 class='red'>Uuuuuups</h1>
 					<p>".$excusa[rand(0,3)]." Gracias por la paciencia :-)</p>";
 				}
-				else {
-					echo "<h1 class='red'>Próximos partidos</h1>(Nota: puedes consultar los <a href='".$ENLACE_PARTIDOS."' target='_blank'>partidos</a> y la <a href='http://es.uefa.com/uefaeuro/season=2012/statistics/round=15172/index.html' target='_blank'>clasificación de goleadores</a> en la página de la UEFA)<br><br>";
-					$horaHoy = (date("H")<2) ? "00:00:00":date("H:i:s",strtotime(date("Y-m-d H:i:s"))-7200);
-					$query="SELECT id FROM partido WHERE ((fecha='".date("Y-m-d")."' AND hora>'".$horaHoy."') OR fecha>'".date("Y-m-d")."') ORDER BY fecha, hora LIMIT 3";
-					//if ($_GET["test"]==1) echo $query."<br>";
-					$res=mysql_query($query,$conexion);
-					echo "<center><table><tr>";
-					$contador=0;
-					while($arra=mysql_fetch_array($res)) {
-						echo"<td valign='top'>".partido($arra["id"])."</td>";
-						$contador++;
-						//if ($contador==2) echo "</tr><tr>";
+				else  {
+				
+					if ($apuesta!=1 && $apuesta2!=1) {
+					
+						echo "<h1 class='red'>Pr&oacute;ximos partidos</h1>(Nota: puedes consultar los <a href='".$ENLACE_PARTIDOS."' target='_blank'>partidos</a> y la <a href='".$ENLACE_GOLEADORES."' target='_blank'>clasificaci&oacute;n de goleadores</a> en la p&aacute;gina de la UEFA)<br><br>";
+						$horaHoy = (date("H")<2) ? "00:00:00":date("H:i:s",strtotime(date("Y-m-d H:i:s"))-7200);
+						
+						$query="SELECT id FROM partido WHERE ((fecha='".date("Y-m-d")."' AND hora>='".$horaHoy."') OR fecha>'".date("Y-m-d")."') AND fase!=6 ORDER BY fecha, hora LIMIT 3";
+						//if ($_GET["test"]==1) echo $query."<br>";
+						$res=mysql_query($query,$conexion);
+						echo "<div style='margin:auto'><table><tr>";
+						$contador=0;
+						while($arra=mysql_fetch_array($res)) {
+							echo"<td valign='top'>".partido($arra["id"])."</td>";
+							echo"<td width=40></td>";
+							$contador++;
+							//if ($contador==2) echo "</tr><tr>";
+						}
+						echo "</tr></table></div>";
+						
+						
+						if (0) {
+
+							echo "<br><h1 class='red'>&Uacute;ltimos partidos jugados</h1><br>";
+
+							$query="SELECT id FROM partido WHERE resultado1>=0 AND resultado2>=0 ORDER BY fecha DESC, hora DESC LIMIT 3";
+							//if ($_GET["test"]==1) echo $query."<br>";
+							$res=mysql_query($query,$conexion);
+							echo "<div style='margin:auto'><table><tr>";
+							$contador=0;
+							while($arra=mysql_fetch_array($res)) {
+								echo"<td valign='top'>".partido_jugado($arra["id"])."</td>";
+								$contador++;
+								//if ($contador==2) echo "</tr><tr>";
+							}
+						
+							echo "</tr></table></div>";
+						}
 					}
-					echo "</tr></table></center>";
+					
 
 
-echo"<div align='center'>
+/*echo"<div align='center'>
 <div><img src='/images/copa_euro.jpg' height='194'> <img src='/images/copa_mundial.jpg' height='194'> <img src='/images/copa_euro.jpg' height='194'></div>
-<div><h1>ESPAÑA TRICAMPEONA ¡FELICIDADES!</h1></div>
-</div>";
+<div><h1>ESPAï¿½A TRICAMPEONA ï¿½FELICIDADES!</h1></div>
+</div>";*/
 
 echo "<br><br>"; //Son las <b>".date("H:i")."</b><br><br>";
-//
-//echo "<span class='black'>Queremos dar nuestras más sinceras condolencias a Beatriz Martínez, Mamen Martínez (Milinka) y Miguel Ávila Martínez por el fallecimiento de Miguel Martínez Bená, participante habitual de la Enroporra.</span><br><br>";
 ?>
-            <div id="content-left">
+            <div id="content-left" <? if ($cuenta==1||$clasificacion==1||$clasificacion_1==1||$amigos==1||$apuesta2==1) echo 'style="width:100% !important"'; ?>>
 <?
 
 					if ($apuesta==1) include "templates/apuesta.php";
 					else if ($cuenta==1) include "templates/cuenta.php";
+					else if ($equipos==1) include "templates/equipos.php";
 					else if ($clasificacion==1) include "templates/clasificacion.php";
-                                        else if ($clasificacion_1==1) include "templates/clasificacion_1.php";
+                    else if ($clasificacion_1==1) include "templates/clasificacion_1.php";
 					else if ($amigos==1) include "templates/amigos.php";
 					else if ($apuesta2==1) include "templates/apuesta2.php";
 					else { $home=1; include "home.php"; }

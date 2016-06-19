@@ -78,7 +78,7 @@
 
 	else {
 
-		if (date("Y-m-d")>"2012-06-21" || (date("Y-m-d")=="2012-06-21" && date("H")>20) || (date("Y-m-d")=="2012-06-21" && date("H")==20 && date("i")>=30)) {
+		if (date("Y-m-d H:i:s")>="2014-06-28 17:30:00") {
 			echo "<h1 class='red'>¡AHORA SÍ QUE LA SUERTE ESTÁ ECHADA!</h1>
 			<p><b>Se cerró el plazo definitivo de apuestas</b> La Comisión de <b>Enroporra</b> ha cerrado las apuestas porque ya ha empezado la fase de eliminatorias de ".$NOMBRE_TORNEO.". De entre los apostantes que hayan rellenado esta segunda fase saldrá nuestro ganador. ¡Mucha suerte a todos!</p>";
 			exit();
@@ -103,7 +103,7 @@ EOT;
 		$res=mysql_query($query,$conexion);
 		$arra=mysql_fetch_array($res);
 
-		$rotulo=array("",""/*,"OCTAVOS"*/,"CUARTOS","SEMIS","FINAL");
+		$rotulo=array("","","OCTAVOS","CUARTOS","SEMIS","FINAL");
 
 		if ($arra["id_equipo1"]==0) {
 			$nombre1="???";
@@ -165,23 +165,23 @@ EOT;
 					Rellena tu <b>apuesta</b>. Si marcas empate te preguntaremos quién pasa por penaltis. En estos casos los puntos por acertar el resultado sólo se dan si el ganador es el que tú dices.
 				</td>
 			</tr>
-			<!--<tr>
-				<td valign='top'>".fichaEliminatoria(49)."</td><td valign='top'>".fichaEliminatoria(50)."</td><td valign='top'>".fichaEliminatoria(51)."</td><td valign='top'>".fichaEliminatoria(52)."</td>
+			<tr>
+				<td valign='top'>".fichaEliminatoria(349)."</td><td valign='top'>".fichaEliminatoria(350)."</td><td valign='top'>".fichaEliminatoria(351)."</td><td valign='top'>".fichaEliminatoria(352)."</td>
 			</tr>
 			<tr>
-				<td valign='top'>".fichaEliminatoria(53)."</td><td valign='top'>".fichaEliminatoria(54)."</td><td valign='top'>".fichaEliminatoria(55)."</td><td valign='top'>".fichaEliminatoria(56)."</td>
-			</tr>-->
-			<tr><td height=20></td></tr>
-			<tr>
-				<td valign='top'>".fichaEliminatoria(225)."</td><td valign='top'>".fichaEliminatoria(226)."</td><td valign='top'>".fichaEliminatoria(227)."</td><td valign='top'>".fichaEliminatoria(228)."</td>
+				<td valign='top'>".fichaEliminatoria(353)."</td><td valign='top'>".fichaEliminatoria(354)."</td><td valign='top'>".fichaEliminatoria(355)."</td><td valign='top'>".fichaEliminatoria(356)."</td>
 			</tr>
 			<tr><td height=20></td></tr>
 			<tr>
-				<td></td><td valign='top'>".fichaEliminatoria(229)."</td><td valign='top'>".fichaEliminatoria(230)."</td><td></td>
+				<td valign='top'>".fichaEliminatoria(357)."</td><td valign='top'>".fichaEliminatoria(358)."</td><td valign='top'>".fichaEliminatoria(359)."</td><td valign='top'>".fichaEliminatoria(360)."</td>
 			</tr>
 			<tr><td height=20></td></tr>
 			<tr>
-				<td colspan='4' align='center' valign='top'>".fichaEliminatoria(231)."</td>
+				<td></td><td valign='top'>".fichaEliminatoria(361)."</td><td valign='top'>".fichaEliminatoria(362)."</td><td></td>
+			</tr>
+			<tr><td height=20></td></tr>
+			<tr>
+				<td colspan='4' align='center' valign='top'>".fichaEliminatoria(364)."</td>
 			</tr>
 			<tr><td height=20></td></tr>
 			<tr>
@@ -212,9 +212,9 @@ EOT;
 			return false;
 		}
 
-                for (i=225; i<=231; i++) {
+                for (i=350; i<=364; i++) {
 
-			if (i==63) continue;
+			if (i==363) continue;
 
 			siguienteEliminatoria(i,0);
 
@@ -254,32 +254,32 @@ EOT;
 		var time = date.getTime();
 		winner = 0;
 
-		var arrayEliminatorias = new Array(230);
+		var arrayEliminatorias = new Array(362);
 
-		/*arrayEliminatorias[49] = "58_1";
-		arrayEliminatorias[50] = "58_2";
-		arrayEliminatorias[51] = "59_2";
-		arrayEliminatorias[52] = "59_1";
-		arrayEliminatorias[53] = "57_1";
-		arrayEliminatorias[54] = "57_2";
-		arrayEliminatorias[55] = "60_1";
-		arrayEliminatorias[56] = "60_2";
+		arrayEliminatorias[349] = "358_1";
+		arrayEliminatorias[350] = "358_2";
+		arrayEliminatorias[351] = "359_1";
+		arrayEliminatorias[352] = "359_2";
+		arrayEliminatorias[353] = "357_1";
+		arrayEliminatorias[354] = "357_2";
+		arrayEliminatorias[355] = "360_1";
+		arrayEliminatorias[356] = "360_2";
 
-		arrayEliminatorias[57] = "61_2";
-		arrayEliminatorias[58] = "61_1";
-		arrayEliminatorias[59] = "62_1";
-		arrayEliminatorias[60] = "62_2";
+		arrayEliminatorias[357] = "361_2";
+		arrayEliminatorias[358] = "361_1";
+		arrayEliminatorias[359] = "362_1";
+		arrayEliminatorias[360] = "362_2";
 
-		arrayEliminatorias[61] = "64_1";
-		arrayEliminatorias[62] = "64_2";*/
+		arrayEliminatorias[361] = "364_1";
+		arrayEliminatorias[362] = "364_2";
 
-                arrayEliminatorias[225] = "229_1";
+                /*arrayEliminatorias[225] = "229_1";
 		arrayEliminatorias[226] = "230_1";
 		arrayEliminatorias[227] = "229_2";
 		arrayEliminatorias[228] = "230_2";
 
 		arrayEliminatorias[229] = "231_1";
-		arrayEliminatorias[230] = "231_2";
+		arrayEliminatorias[230] = "231_2";*/
 
 		resultado1=$("#r_"+partido+"_1").val();
 		resultado2=$("#r_"+partido+"_2").val();

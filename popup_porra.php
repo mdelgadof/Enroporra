@@ -27,8 +27,8 @@ You can also purchase a PSD-file for this template.
     	<div id="content">
 <?
 			echo "<p><h1>La apuesta de <span class='red'>$nombre</span></h1></p>";
-			echo porra($id,2,true);
-			echo "<br>";
+			/*echo porra($id,2,true);
+			echo "<br>";*/
 			echo porra($id);
 ?>
 		<center><br><br><input type='button' value='Cerrar' onClick='window.close()'></center>

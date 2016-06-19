@@ -65,7 +65,7 @@
 	date_default_timezone_set("Europe/Madrid");
 
 	// Partidos de la primera fase
-	$faseQ = (date("Y-m-d H:i:s")<="2012-06-21 20:45:00") ? "p.fase=1":"p.fase>1";
+	$faseQ = (date("Y-m-d H:i:s")<=$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE) ? "p.fase=1":"p.fase>1";
         $query="SELECT p.*,e1.nombre nombre1,e1.bandera bandera1,e2.nombre nombre2,e2.bandera bandera2 FROM partido p,equipo e1,equipo e2 WHERE p.id_equipo1=e1.id AND p.id_equipo2=e2.id AND fecha<='".date("Y-m-d")."' AND ".$faseQ." ORDER BY fecha DESC, hora DESC";
 	/*echo $query;
 	exit();*/

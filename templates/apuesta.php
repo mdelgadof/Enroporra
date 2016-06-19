@@ -52,7 +52,7 @@
 				$res=mysql_query($query,$conexion);
 			}
 
-			echo "<h1 class='red'>Inserción correcta</h1><p>Gracias, <span class='red'><b>".$nombre."</b></span>. Se ha anotado tu apuesta para el nick <span class='red'><b>".$nick."</b></span>. Tu número de apostante es el <span class='red'><b>".$id_porrista."</b></span>, apúntalo para cualquier consulta a la administración relativa a tu apuesta.<br><br>Recuerda que la apuesta sólo será efectiva si has efectuado el pago de 10 euros (ver <a href='".$ENLACE_BASES."' target='_blank'>bases</a>). Las formas de pago son, indicando el número de tu apuesta, tu nombre o tu nick: en el bar Enro, o por transferencia a la cuenta corriente 2038 1900 17 3000142806 (titular: Federico de la Torriente Gutiérrez) o en mano a cualquier miembro de la comisión que figure en las bases. Gracias por participar y <b>¡mucha suerte!</b></p>";
+			echo "<h1 class='red'>Inserción correcta</h1><p>Gracias, <span class='red'><b>".$nombre."</b></span>. Se ha anotado tu apuesta para el nick <span class='red'><b>".$nick."</b></span>. Tu número de apostante es el <span class='red'><b>".$id_porrista."</b></span>, apúntalo para cualquier consulta a la administración relativa a tu apuesta.<br><br>Recuerda que la apuesta sólo será efectiva si has efectuado el pago de 10 euros (ver <a href='".$ENLACE_BASES."' target='_blank'>bases</a>). Las formas de pago es este año exclusivamente, indicando el número de tu apuesta, tu nombre o tu nick, por transferencia a la cuenta corriente ".$CUENTA_BANCO." (titular: ".$TITULAR_BANCO."). Gracias por participar y <b>¡mucha suerte!</b></p>";
 
 			echo "<h1 class='red'>Tu apuesta</h1><p>Esta es la apuesta que hemos registrado para el nick <span class='red'><b>".$nick."</b></span>:</p>";
 
@@ -62,7 +62,7 @@
 
 	else {
 
-		if (date("Y-m-d")>"2012-06-08" || (date("Y-m-d")=="2012-06-08" && date("H")>=18)) {
+		if (date("Y-m-d H:i:s")>=date("Y-m-d H:i:s",strtotime($FECHA_PRIMER_PARTIDO)-1800) || $_GET["testing"]==1) {
 			echo "<h1 class='red'>RIEN NE VA PLUS!</h1>
 			<p><b>¡Ha empezado ".$NOMBRE_TORNEO."!</b> La Comisión de <b>Enroporra</b> ha cerrado las apuestas y ya no se admiten nuevos participantes. Esta pantalla permanecerá cerrada hasta el comienzo de la fase de eliminatorias de ".$NOMBRE_TORNEO.", en la que todos los apostantes tendrán que rellenar los cruces de ".$PRIMERA_ELIMINATORIA." y sucesivos, y elegir al árbitro de la final. ¡Suerte a los participantes! y, si no te ha dado tiempo a ser uno de ellos para ".$NOMBRE_TORNEO.", ¡te esperamos en ".$NOMBRE_SIGUIENTE_TORNEO."!</p>";
 			exit();
@@ -74,7 +74,7 @@
 		<input type='hidden' name='accion' value='insertar'>
 		<input type='hidden' name='controlNick' id='controlNick' value='0'>
 			<h1 class='red'>Rellena tu apuesta</h1>
-                <p>A continuación tienes el calendario con todos los partidos de la primera fase y un listado de pichichis. Hay que insertar un resultado en cada recuadro para completar tu apuesta. Está permitido el empate. Recuerda que se reparten puntos tanto por el acierto del resultado exacto como por el acierto del vencedor (o empate).</p>
+                <p>A continuación tienes el calendario con todos los partidos de la primera fase y un listado de goleadores. Hay que insertar un resultado en cada recuadro para completar tu apuesta. Está permitido el empate. Recuerda que se reparten puntos tanto por el acierto del resultado exacto como por el acierto del vencedor (o empate).</p>
 
 				<table>
 					<tr><td nowrap><h1>TU NOMBRE:</h1></td><td><input type='text' name='nombre' class='inputArea' style='width:150px;'></td><td colspan='2'></td></tr>
@@ -84,11 +84,11 @@
 					<tr><td valign='top'><h1>FORMA DE<br>PAGO:</h1></td>
 						<td colspan='10'><a name='formapago'></a>
 							<div id='capa_formapago'>
-							<input type='radio' name='forma_pago' value='sobre en Enro'> Método tradicional: sobre en el bar Enro<br>
+							<!--<input type='radio' name='forma_pago' value='sobre en Enro'> Método tradicional: sobre en el bar Enro<br>-->
 							<input type='radio' name='forma_pago' value='transferencia bancaria'> Por transferencia (Acuérdate de poner tu nombre y nick en el concepto) a <font color='green'><b><?= $NOMBRE_BANCO ?></b> CC <?= $CUENTA_BANCO ?></font> (Titular: <?= $TITULAR_BANCO ?>)<br>
-							<input type='radio' name='forma_pago' value='en mano a miembro de comisión'> Entrego el importe a un miembro de la Comisión.
+							<!--<input type='radio' name='forma_pago' value='en mano a miembro de comisión'> Entrego el importe a un miembro de la Comisión.
 							</div>
-							<div id='capa_comisionero'>&nbsp;&nbsp;&nbsp;&nbsp;¿A quién? <input type='radio' name='comisionero' value='Fede'> Fede &nbsp;&nbsp;<input type='radio' name='comisionero' value='Tomás'> Tomás &nbsp;&nbsp;<input type='radio' name='comisionero' value='Rogelio'> Rogelio</div><br>
+							<div id='capa_comisionero'>&nbsp;&nbsp;&nbsp;&nbsp;¿A quién? <input type='radio' name='comisionero' value='Fede'> Fede &nbsp;&nbsp;<input type='radio' name='comisionero' value='Tomás'> Tomás &nbsp;&nbsp;<input type='radio' name='comisionero' value='Rogelio'> Rogelio</div>--><br>
 						</td>
 						<td>&nbsp;</td><td></td>
 
@@ -97,6 +97,7 @@
 					<tr><td colspan='10'><h1>Para que la administración te contacte:</h1></td></tr>
 					<tr><td><br>Teléfono (no obligatorio):</td><td><br><input type='text' name='telefono' id='telefono'></td><td>&nbsp;</td><td></td></tr>
 					<tr><td>Email (no obligatorio):</td><td><input type='text' name='email' id='email'></td><td>&nbsp;</td><td></td></tr>
+					<tr><td colspan='10'>[ Pero déjanos algo para que podamos contactarte, no lo usaremos para nada más :) ]</td></tr>
 					<tr><td colspan='10'><p>&nbsp;</p></td></tr>
 				</table>
 
@@ -111,18 +112,18 @@
 		echo "<option value='".$arra["id"]."'>".$arra["nombre"]." (".$arra["pais"].")</option>";
 	}
 	echo "</select><br>";
-	echo "* Si no encuentras a tu pichichi en la lista que hemos diseñado, puedes enviar un correo a la siguiente dirección: <a href='mailto:".$EMAIL_ADMIN."'>".$EMAIL_ADMIN."</a>";
+	echo "* Si no encuentras a tu goleador en la lista que hemos diseñado, puedes enviar un correo a la siguiente dirección: <a href='mailto:".$EMAIL_ADMIN."'>".$EMAIL_ADMIN."</a>";
 	echo "</p>";
 
 	// Partidos de la primera fase
-	$query="SELECT p.*,e1.nombre nombre1,e1.bandera bandera1,e2.nombre nombre2,e2.bandera bandera2 FROM partido p,equipo e1,equipo e2 WHERE p.id_equipo1=e1.id AND p.id_equipo2=e2.id";
+	$query="SELECT p.*,e1.nombre nombre1,e1.bandera bandera1,e2.nombre nombre2,e2.bandera bandera2 FROM partido p,equipo e1,equipo e2 WHERE p.id_equipo1=e1.id AND p.id_equipo2=e2.id AND p.fase=1";
 	$res=mysql_query($query,$conexion);
 
 	echo "<table>";
 	while ($arra=mysql_fetch_array($res)) {
 		echo "<tr><td colspan=4>Fecha: ".date("d/m/Y",strtotime($arra["fecha"]))." ".$arra["hora"]."</td></tr>";
-		echo "<tr><td><img width=32 height=32 src='".WEB_ROOT."/images/badges/".$arra["bandera1"]."'></td><td><h1 class='red'>".$arra["nombre1"]."</h1></td><td><input class='inputArea' name='resultado_".$arra["id"]."_1' type='text'></td>";
-		echo "<tr><td><img width=32 height=32 src='".WEB_ROOT."/images/badges/".$arra["bandera2"]."'></td><td><h1 class='red'>".$arra["nombre2"]."</h1></td><td><input class='inputArea' name='resultado_".$arra["id"]."_2' type='text'></td>";
+		echo "<tr><td><img class='badge-apuesta' width=32 height=32 src='".WEB_ROOT."/images/badges/".$arra["bandera1"]."'></td><td><h1 class='red'>".$arra["nombre1"]."</h1></td><td><input class='inputArea' name='resultado_".$arra["id"]."_1' type='text'></td>";
+		echo "<tr><td><img class='badge-apuesta' width=32 height=32 src='".WEB_ROOT."/images/badges/".$arra["bandera2"]."'></td><td><h1 class='red'>".$arra["nombre2"]."</h1></td><td><input class='inputArea' name='resultado_".$arra["id"]."_2' type='text'></td>";
 		echo "<tr><td colspan=4 height=10></td></tr>";
 	}
 	echo "</table>";

@@ -1,0 +1,6 @@
+RedirectMatch 404 /\.git
+
+<FilesMatch "\.(?:md|py|rb)$">
+Order allow,deny
+Deny from all
+</FilesMatch>
