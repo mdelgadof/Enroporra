@@ -184,33 +184,22 @@ EOT;
             echo "<td height=20></td></tr><tr>";
         }
         $partido++;
-        echo "<td valign='top'>".fichaEliminatoria($arra["id"])."</td>";
-        if ($partido==4||($fase==4&&$partido==2)) {
+
+        if ($fase==4&&$partido==1) echo "<td></td>";
+        $tdfinal = ($fase==5) ? "colspan='4' align='center'":"";
+
+        echo "<td ".$tdfinal." valign='top'>".fichaEliminatoria($arra["id"])."</td>";
+
+        if ($fase==4&&$partido==2) echo "<td></td>";
+
+        if ($partido==4||($fase==4&&$partido==2)||$fase==5) {
             echo "</tr><tr>";
             $partido=0;
         }
     }
 
     echo"
-			<tr>
-				<td valign='top'>".fichaEliminatoria(349)."</td><td valign='top'>".fichaEliminatoria(350)."</td><td valign='top'>".fichaEliminatoria(351)."</td><td valign='top'>".fichaEliminatoria(352)."</td>
-			</tr>
-			<tr>
-				<td valign='top'>".fichaEliminatoria(353)."</td><td valign='top'>".fichaEliminatoria(354)."</td><td valign='top'>".fichaEliminatoria(355)."</td><td valign='top'>".fichaEliminatoria(356)."</td>
-			</tr>
-			<tr><td height=20></td></tr>
-			<tr>
-				<td valign='top'>".fichaEliminatoria(357)."</td><td valign='top'>".fichaEliminatoria(358)."</td><td valign='top'>".fichaEliminatoria(359)."</td><td valign='top'>".fichaEliminatoria(360)."</td>
-			</tr>
-			<tr><td height=20></td></tr>
-			<tr>
-				<td></td><td valign='top'>".fichaEliminatoria(361)."</td><td valign='top'>".fichaEliminatoria(362)."</td><td></td>
-			</tr>
-			<tr><td height=20></td></tr>
-			<tr>
-				<td colspan='4' align='center' valign='top'>".fichaEliminatoria(364)."</td>
-			</tr>
-			<tr><td height=20></td></tr>
+			    <td height=20></td></tr>
 			<tr>
 				<td colspan='4' align='center' valign='top'>El árbitro de la final:<br><select id='arbitro' name='arbitro'><option value=''>Elige a tu árbitro para la final...</option>".$optionsArbitros."</select></td>
 			</tr>
@@ -288,7 +277,7 @@ EOT;
             $res=mysql_query($query,$conexion);
             while ($arra=mysql_fetch_array($res)) {
             ?>
-                arrayEliminatorias[<?= $arra["id"] ?> = "<?= $arra["vencedor_eliminatoria"] ?>";
+                arrayEliminatorias[<?= $arra["id"] ?>] = "<?= $arra["vencedor_eliminatoria"] ?>";
         <?php
             }
         ?>
