@@ -77,10 +77,10 @@ function puntos($id_porrista) {
 	$rotulo[5]="FINAL";
 	$rotulo[6]="TERCER Y CUARTO PUESTO";
 
-	if ($id_arbitro==330) {
+	if ($id_arbitro==$ID_ARBITRO_FINAL) {
 
 		$stringDevuelve="<span class='red'>&Aacute;RBITRO DE LA FINAL</span><br>";
-		$stringDevuelve.="<img src='".WEB_ROOT."/images/badges/italy.png' width=16 height=16> <b>NICOLA RIZZOLI (ITALIA)</b> <span class='green'>5 puntos</span> ";
+		$stringDevuelve.="<img src='".WEB_ROOT."/images/badges/".$PAIS_ARBITRO_FINAL.".png' width=16 height=16> <b>".$NOMBRE_ARBITRO_FINAL."</b> <span class='green'>5 puntos</span> ";
 		$stringDevuelve.="<br><br>";
 		$puntos+=5;
 
@@ -483,7 +483,7 @@ function clasificacion($tipo="completa") {
 		$res=mysql_query($query,$conexion);
 		$proximosPartidos=array();
 		while ($arra=mysql_fetch_array($res)) {
-			if ($arra["fase"]==1 || ($arra["fase"]>1 && date("Y-m-d H:i:s")>"2014-06-28 18:00:00"))
+			if ($arra["fase"]==1 || ($arra["fase"]>1 && date("Y-m-d H:i:s")>$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE))
                         $proximosPartidos[]=$arra["id"];
 		}
 

@@ -8,9 +8,9 @@ while ($arra=mysql_fetch_array($res)) {
 ?>
 <h1 class='red'>BIENVENIDO</h1>
 <p>
-Bienvenido a la ENROPORRA de la Eurocopa de Francia 2016. El mejor site para seguir online los resultados y pron&oacute;sticos de la <b>Porra de la Eurocopa de F&uacute;tbol</b>. <br><br>
+Bienvenido a la ENROPORRA de <?= $NOMBRE_TORNEO ?>. El mejor site para seguir online los resultados y pron&oacute;sticos de una gran y divertida <b>Porra</b>. <br><br>
 
-Llevamos 22 a&ntilde;os (desde EE.UU. 1994) organizando Porras sin &aacute;nimo de lucro (entre amigos) en todas las Eurocopas y Mundiales de F&uacute;tbol.<br><br>
+Llevamos <?= (date("Y")-1994) ?> a&ntilde;os (desde EE.UU. 1994) organizando Porras sin &aacute;nimo de lucro (entre amigos) en todas las Eurocopas y Mundiales de F&uacute;tbol.<br><br>
 
 La Porra consta de dos fases, que se detallan m&aacute;s ampliamente en las <a href='<?= $ENLACE_BASES ?>' target='_blank'>BASES</a>:<br><br>
 

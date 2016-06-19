@@ -78,7 +78,8 @@
 
 	else {
 
-		if (date("Y-m-d H:i:s")>="2014-06-28 17:30:00") {
+		// Cerramos definitivamente apuestas media hora antes del primer partido de la segunda fase
+        if (time()>=(strtotime($FECHA_PRIMER_PARTIDO_SEGUNDA_FASE)-30*60)) {
 			echo "<h1 class='red'>¡AHORA SÍ QUE LA SUERTE ESTÁ ECHADA!</h1>
 			<p><b>Se cerró el plazo definitivo de apuestas</b> La Comisión de <b>Enroporra</b> ha cerrado las apuestas porque ya ha empezado la fase de eliminatorias de ".$NOMBRE_TORNEO.". De entre los apostantes que hayan rellenado esta segunda fase saldrá nuestro ganador. ¡Mucha suerte a todos!</p>";
 			exit();
