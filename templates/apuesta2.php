@@ -79,7 +79,7 @@
 	else {
 
 		// Cerramos definitivamente apuestas media hora antes del primer partido de la segunda fase
-        if (time()>=(strtotime($FECHA_PRIMER_PARTIDO_SEGUNDA_FASE)-30*60)) {
+        if (time()>=(strtotime($FECHA_PRIMER_PARTIDO_SEGUNDA_FASE)-30*60) && $_GET["passingshot"]!=1) {
 			echo "<h1 class='red'>¡AHORA SÍ QUE LA SUERTE ESTÁ ECHADA!</h1>
 			<p><b>Se cerró el plazo definitivo de apuestas</b> La Comisión de <b>Enroporra</b> ha cerrado las apuestas porque ya ha empezado la fase de eliminatorias de ".$NOMBRE_TORNEO.". De entre los apostantes que hayan rellenado esta segunda fase saldrá nuestro ganador. ¡Mucha suerte a todos!</p>";
 			exit();
@@ -123,7 +123,7 @@ EOT;
 			$bandera2=WEB_ROOT."/images/badges/".$arra["bandera2"];
 		}
 
-		$content = "<span class='red'><b>".($id_partido%100)."</b></span> ".$rotulo[$arra["fase"]]."<br>".date("d/m/Y H:i",strtotime($arra["fecha"]." ".$arra["hora"]))."<br>";
+		$content = "<span class='red'><b>".($id_partido)."</b></span> ".$rotulo[$arra["fase"]]."<br>".date("d/m/Y H:i",strtotime($arra["fecha"]." ".$arra["hora"]))."<br>";
 		$content.= "<table>";
 		$content.= "<tr><td><div id='b_".$id_partido."_1'><img src='".$bandera1."' width=22 height=22></div></td><td width=5></td><td><div id='n_".$id_partido."_1'><h2>".$nombre1."</h2></div></td><td width=5></td><td><input type='text' name='r_".$id_partido."_1' id='r_".$id_partido."_1' class='inputArea' style='height:20px; width:10px; font-size:20px;' maxlength=1 onBlur='siguienteEliminatoria(".$id_partido.",0)'></td></tr>";
 		$content.= "<tr><td><div id='b_".$id_partido."_2'><img src='".$bandera2."' width=22 height=22></div></td><td width=5></td><td><div id='n_".$id_partido."_2'><h2>".$nombre2."</h2></div></td><td width=5></td><td><input type='text' name='r_".$id_partido."_2' id='r_".$id_partido."_2' class='inputArea' style='height:20px; width:10px; font-size:20px;' maxlength=1 onBlur='siguienteEliminatoria(".$id_partido.",0)'></td></tr>";
@@ -214,6 +214,14 @@ EOT;
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js'></script>
 <script type='text/javascript'>
 
+	jQuery(document).on('keydown', 'input.large', function(ev) {
+	    if(ev.which === 13) {
+        	// Will change backgroundColor to blue as example
+
+        	// Avoid form submit
+	        return false;
+	    }
+	});
 	function revisaForm() {
 
 		if ($("#nick").val()=="") {
@@ -228,7 +236,7 @@ EOT;
 			return false;
 		}
 
-                for (i=350; i<=364; i++) {
+                for (i=437; i<=451; i++) {
 
 			if (i==363) continue;
 

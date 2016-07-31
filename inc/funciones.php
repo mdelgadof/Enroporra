@@ -2,7 +2,7 @@
 
 function porra($id_porrista,$fase=1,$admin=false) {
 
-	global $conexion;
+	global $conexion,$ID_ARBITRO_FINAL;
 
 	$query="SELECT j.id,j.nombre,e.nombre pais, e.bandera FROM equipo e,jugador j,porrista p WHERE j.id_equipo=e.id AND j.id=p.id_goleador AND p.id='".$id_porrista."'";
 	if ($fase>1) $query="SELECT j.id,j.nombre,e.nombre pais, e.bandera, a.nombre arbitro FROM equipo e,jugador j,porrista p,arbitro a WHERE j.id_equipo=e.id AND j.id=p.id_goleador AND a.id=p.id_arbitro AND p.id='".$id_porrista."'";
@@ -34,7 +34,7 @@ function porra($id_porrista,$fase=1,$admin=false) {
 
 function puntos($id_porrista) {
 
-	global $conexion;
+	global $conexion,$ID_ARBITRO_FINAL,$NOMBRE_ARBITRO_FINAL,$PAIS_ARBITRO_FINAL,$ARRAY_PICHICHIS;
 
 	// Identidad del porrista
 	$query="SELECT p.nick,concat(p.nombre,' ',p.apellido) nombreporrista,p.id_arbitro,j.id,j.nombre,e.nombre equipo,e.id idEquipo FROM porrista p,jugador j, equipo e WHERE p.id_goleador=j.id AND p.id='".$id_porrista."' AND j.id_equipo=e.id";
@@ -86,9 +86,9 @@ function puntos($id_porrista) {
 
 	}
 
-	if (in_array($id_goleador,array(-1))) {
+	if (in_array($id_goleador,$ARRAY_PICHICHIS)) {
 
-		$stringDevuelve.="<span class='red'>PICHICHI DEL MUNDIAL (JAMES RODR&Iacute;GUEZ)</span><br>";
+		$stringDevuelve.="<span class='red'>MAXIMO GOLEADOR DEL TORNEO</span><br>";
 		$stringDevuelve.="<b>".$nombreGoleador."</b> (".$equipoGoleador.") <span class='green'>5 puntos</span> ";
 		$stringDevuelve.="<br><br>";
 		$puntos+=5;
