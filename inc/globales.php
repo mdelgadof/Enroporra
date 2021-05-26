@@ -1,4 +1,4 @@
-<?
+<?php
 $NOMBRE_TORNEO = "la Eurocopa 2016";
 $ENLACE_BASES = "docs/EnroPorraFrancia2016.pdf";
 $ENLACE_PARTIDOS = "http://es.uefa.com/uefaeuro/season=2016/matches/index.html#md/1";

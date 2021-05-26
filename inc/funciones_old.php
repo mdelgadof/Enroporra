@@ -29,7 +29,7 @@ function clasificacion($tipo="completa") {
 	if ($partidos) {
 
 		$nombresExistentes=array();
-		$devuelve.= "Clasificación $cabecera a día de hoy (<span class='red'><b>$partidos</b></span> partidos disputados y apuntados) :<br><br>";
+		$devuelve.= "ClasificaciÃ³n $cabecera a dï¿½a de hoy (<span class='red'><b>$partidos</b></span> partidos disputados y apuntados) :<br><br>";
 
 		$query="SELECT id FROM partido WHERE resultado1<0 ORDER BY fecha,hora LIMIT 4";
 		$res=mysql_query($query,$conexion);
@@ -58,7 +58,7 @@ function clasificacion($tipo="completa") {
 
 		$clasificacion=1; $puntuacionAnterior="";
 		$devuelve.= "<table>";
-		$devuelve.= "<tr><td colspan='2'></td><td>Puntos</td><td>Apuesta</td><td>&nbsp;&nbsp;&nbsp;&nbsp;Apuesta en próximos partidos</td></tr>";
+		$devuelve.= "<tr><td colspan='2'></td><td>Puntos</td><td>Apuesta</td><td>&nbsp;&nbsp;&nbsp;&nbsp;Apuesta en prï¿½ximos partidos</td></tr>";
 		foreach ($arrayPorristas as $porrista) {
 
 			if ($bgColor=="#FFFFFF") $bgColor="#EEEEEE"; else $bgColor="#FFFFFF";
@@ -99,7 +99,7 @@ function clasificacion($tipo="completa") {
 	} // END existen partidos reales
 
 	else {
-		$devuelve.= "<p>Todavía no ha comenzado ".$NOMBRE_TORNEO." en Enroporra :)</p>";
+		$devuelve.= "<p>TodavÃ­a no ha comenzado ".$NOMBRE_TORNEO." en Enroporra :)</p>";
 	}
 
 	$WEB_ROOT=WEB_ROOT;

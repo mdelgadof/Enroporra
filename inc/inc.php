@@ -1,4 +1,4 @@
-<?
+<?php
 if ($_SERVER["SERVER_NAME"]=="localhost") {
 	define ("DOCUMENT_ROOT","E:/www.enroporra.co.cc");
 	define ("WEB_ROOT","http://www.enroporra.com");

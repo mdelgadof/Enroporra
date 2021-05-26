@@ -25,7 +25,7 @@ You can also purchase a PSD-file for this template.
 <div id="container">
     <div id="main">
     	<div id="content">
-<?
+<?php
 			echo "<p><h1>La apuesta de <span class='red'>$nombre</span></h1></p>";
 			/*echo porra($id,2,true);
 			echo "<br>";*/

@@ -13,20 +13,20 @@ You can also purchase a PSD-file for this template.
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Enroporra - Mundial 2010</title>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
-<link href="css/headers<?= rand(1,12) ?>.css" rel="stylesheet" type="text/css" />
+<link href="css/headers<?php echo rand(1,12) ?>.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="container">
 	<!-- header -->
     <div id="header">
-    	<div id="logo"><a href="<?= WEB_ROOT ?>">&nbsp;</a></div>
+    	<div id="logo"><a href="<?php echo WEB_ROOT ?>">&nbsp;</a></div>
         <div id="menu">
         	<ul>
-              <li><a href="<?= WEB_ROOT ?>">Home</a></li>
+              <li><a href="<?php echo WEB_ROOT ?>">Home</a></li>
               <li><a href="apuesta.php">Apuesta</a></li>
               <li><a href="bases_enroporra_mundial_2010.pdf" target='_blank'>Bases</a></li>
               <li><a href="cuenta.php">Mi cuenta</a></li>
-              <li><a href="clasificacion.php">Clasificación</a></li>
+              <li><a href="clasificacion.php">ClasificaciÃ³n</a></li>
               <li><a href='mailto:porramundialenro@gmail.com'>Contacto</a></li>
           </ul>
       </div>
@@ -35,9 +35,9 @@ You can also purchase a PSD-file for this template.
     <!-- main -->
     <div id="main">
     	<div id="content">
-			<?
+			<?php
 			if ($_GET["test"]==1) {
-				echo "<h1 class='red'>Próximos partidos</h1> ";
+				echo "<h1 class='red'>PrÃ³ximos partidos</h1> ";
 				$query="SELECT id FROM partido WHERE ((fecha='".date("Y-m-d")."' AND hora>'".date("H:i:s")."') OR fecha>'".date("Y-m-d")."') ORDER BY fecha, hora LIMIT 50";
 				$res=mysql_query($query,$conexion);
 				echo "<table><tr>";

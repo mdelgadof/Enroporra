@@ -13,7 +13,7 @@ You can also purchase a PSD-file for this template.
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Admin Enroporra</title>
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
-<link href="../css/headers<?= rand(1,12) ?>.css" rel="stylesheet" type="text/css" />
+<link href="../css/headers<?php echo rand(1,12) ?>.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="container">
@@ -22,7 +22,7 @@ You can also purchase a PSD-file for this template.
     	<div id="logo"><a href="/">&nbsp;</a></div>
         <div id="menu">
         	<ul>
-              <li><a href="<?= WEB_ROOT ?>/admin">Home Admin</a></li>
+              <li><a href="<?php echo WEB_ROOT ?>/admin">Home Admin</a></li>
               <li><a href="pagados.php">Pagados</a></li>
               <li><a href="partidos.php">Partidos</a></li>
               <li><a href="apuesta2.php">Apuesta 2 Fase</a></li>
@@ -35,7 +35,7 @@ You can also purchase a PSD-file for this template.
     <!-- main -->
     <div id="main">
     	<div id="content">
-			<?
+			<?php
 			if ($pagados==1) include "t_pagados.php";
 			else if ($partidos==1) include "t_partidos.php";
 			else if ($apuesta2==1) include "t_apuesta2.php";

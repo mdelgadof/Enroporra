@@ -1,4 +1,4 @@
-<?
+<?php
 	if ($_GET["accion"]=="eliminar_gol") {
 		$id_gol=intval($_GET["id"]);
 		$query="DELETE FROM goles WHERE id='$id_gol'";
@@ -9,7 +9,7 @@
 
 	if ($_POST["accion"]=="insertar") {
 
-		// InserciÛn de partidos
+		// Inserci√≥n de partidos
 		$partidos=array();
 
 		// Recogida de datos
@@ -37,7 +37,7 @@
 			}
 		}
 
-		// InserciÛn en BD de partidos
+		// Inserci√≥n en BD de partidos
 		foreach ($partidos as $partido => $resultado) {
 
 			if ($resultado[1]>$resultado[2]) $quiniela="1";
@@ -51,7 +51,7 @@
 			$res=mysql_query($query,$conexion);
 		}
 
-		echo "<h1 class='red'>InserciÛn correcta</h1><p>OK, se han insertado los resultados y goleadores que has colocado. M·s abajo puedes ver cÛmo queda el calendario real</p>";
+		echo "<h1 class='red'>Inserci√≥n correcta</h1><p>OK, se han insertado los resultados y goleadores que has colocado. M√°s abajo puedes ver c√≥mo queda el calendario real</p>";
 
 	}
 
@@ -59,8 +59,8 @@
 		<form name='insertar_resultados' id='insertar_resultados' action='partidos.php' method='post' onSubmit='return validaform();'>
 		<input type='hidden' name='accion' value='insertar'>
 			<h1 class='red'>Resultados reales</h1>
-                <p>AquÌ escribimos los resultados y goleadores que se vayan produciendo en la realidad durante <?= $NOMBRE_TORNEO ?>. Esto nos permitir· tener actualizada la home con los ˙ltimos partidos y a la vez permitir· que la clasificaciÛn se vaya generando autom·ticamente. Por motivos obvios, el sistema no deja introducir el resultado de un partido que todavÌa no se ha jugado (o lo que es lo mismo, tiene fecha futura).</p>
-<?
+                <p>Aqu√≠ escribimos los resultados y goleadores que se vayan produciendo en la realidad durante <?php echo $NOMBRE_TORNEO ?>. Esto nos permitir√° tener actualizada la home con los √∫ltimos partidos y a la vez permitir√° que la clasificaci√≥n se vaya generando autom√°ticamente. Por motivos obvios, el sistema no deja introducir el resultado de un partido que todav√≠a no se ha jugado (o lo que es lo mismo, tiene fecha futura).</p>
+<?php
 
 	date_default_timezone_set("Europe/Madrid");
 
@@ -71,7 +71,7 @@
 	exit();*/
 	$res=mysql_query($query,$conexion);
 	$num=mysql_num_rows($res);
-	if (!$num) echo "TodavÌa no ha empezado $NOMBRE_TORNEO, no se pueden poner los resultados de los partidos :)<br><br>";
+	if (!$num) echo "Todav√≠a no ha empezado $NOMBRE_TORNEO, no se pueden poner los resultados de los partidos :)<br><br>";
 
 	echo "<table>";
 	while ($arra=mysql_fetch_array($res)) {

@@ -1,4 +1,4 @@
-<?
+<?php
 include "../inc/inc.php";
 $id=intval($_GET["id"]);
 $nuevoEstado=$_GET["nuevoEstado"];

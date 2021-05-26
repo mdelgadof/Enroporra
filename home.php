@@ -1,4 +1,4 @@
-<?
+<?php
 $query="SELECT * FROM noticias WHERE activa='si' ORDER BY fecha DESC";
 $res=mysql_query($query,$conexion);
 while ($arra=mysql_fetch_array($res)) {
@@ -8,11 +8,11 @@ while ($arra=mysql_fetch_array($res)) {
 ?>
 <h1 class='red'>BIENVENIDO</h1>
 <p>
-Bienvenido a la ENROPORRA de <?= $NOMBRE_TORNEO ?>. El mejor site para seguir online los resultados y pron&oacute;sticos de una gran y divertida <b>Porra</b>. <br><br>
+Bienvenido a la ENROPORRA de <?php echo $NOMBRE_TORNEO ?>. El mejor site para seguir online los resultados y pron&oacute;sticos de una gran y divertida <b>Porra</b>. <br><br>
 
-Llevamos <?= (date("Y")-1994) ?> a&ntilde;os (desde EE.UU. 1994) organizando Porras sin &aacute;nimo de lucro (entre amigos) en todas las Eurocopas y Mundiales de F&uacute;tbol.<br><br>
+Llevamos <?php echo (date("Y")-1994) ?> a&ntilde;os (desde EE.UU. 1994) organizando Porras sin &aacute;nimo de lucro (entre amigos) en todas las Eurocopas y Mundiales de F&uacute;tbol.<br><br>
 
-La Porra consta de dos fases, que se detallan m&aacute;s ampliamente en las <a href='<?= $ENLACE_BASES ?>' target='_blank'>BASES</a>:<br><br>
+La Porra consta de dos fases, que se detallan m&aacute;s ampliamente en las <a href='<?php echo $ENLACE_BASES ?>' target='_blank'>BASES</a>:<br><br>
 
 <b>a)</b> Primera fase > Se elaboran pron&oacute;sticos de todos los partidos de la primera fase, otorg&aacute;ndose puntos tanto por acertar el ganador (o empate) como por el resultado. Igualmente en la primera fase hay que apostar por un m&aacute;ximo goleador para el torneo que ir&aacute; dando puntos por cada gol que anote en el campeonato. Si al final del campeonato tu jugador se corona como el m&aacute;ximo goleador del torneo (no se contar&aacute;n asistencias ni ning&uacute;n otro par&aacute;metro distinto del de los goles), tendr&aacute;s puntos adicionales.<br><br>
 

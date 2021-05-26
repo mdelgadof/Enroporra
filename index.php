@@ -11,26 +11,26 @@ You can also purchase a PSD-file for this template.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Enroporra - <?= $NOMBRE_TORNEO ?></title>
+<title>Enroporra - <?php echo $NOMBRE_TORNEO ?></title>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
-<link href="css/headers<?= rand(1,12) ?>.css" rel="stylesheet" type="text/css" />
+<link href="css/headers<?php echo rand(1,12) ?>.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="http://www.uefa.com/imgml/favicon/comp/euro2016.ico" />
 </head>
 <body>
 <div id="container">
 	<!-- header -->
     <div id="header">
-    	<div id="logo"><a href="<?= WEB_ROOT ?>">&nbsp;</a></div>
+    	<div id="logo"><a href="<?php echo WEB_ROOT ?>">&nbsp;</a></div>
         <div id="menu">
         	<ul>
-              <li><a href="<?= WEB_ROOT ?>">Home</a></li>
+              <li><a href="<?php echo WEB_ROOT ?>">Home</a></li>
               <li><a href="apuesta.php">Apuesta</a></li>
-              <li><a href="<?= $ENLACE_BASES ?>" target='_blank'>Bases</a></li>
+              <li><a href="<?php echo $ENLACE_BASES ?>" target='_blank'>Bases</a></li>
               <li><a href="cuenta.php">Mi cuenta</a></li>
               <li><a href="amigos.php">Amigos</a></li>
               <li><a href="clasificacion.php">Clasificaci&oacute;n</a></li>
-              <li><a href="<?= $ENLACE_PARTIDOS ?>">Partidos</a></li>
-              <li><a href='mailto:<?= $EMAIL_ADMIN ?>'>Contacto</a></li>
+              <li><a href="<?php echo $ENLACE_PARTIDOS ?>">Partidos</a></li>
+              <li><a href='mailto:<?php echo $EMAIL_ADMIN ?>'>Contacto</a></li>
           </ul>
       </div>
   </div>
@@ -44,7 +44,7 @@ You can also purchase a PSD-file for this template.
 			</div>
 			<div style='clear:both'></div>
 
-			<?
+			<?php
 				date_default_timezone_set("Europe/Madrid");
 
 				if (!$conexion) {
@@ -99,13 +99,13 @@ You can also purchase a PSD-file for this template.
 
 /*echo"<div align='center'>
 <div><img src='/images/copa_euro.jpg' height='194'> <img src='/images/copa_mundial.jpg' height='194'> <img src='/images/copa_euro.jpg' height='194'></div>
-<div><h1>ESPA�A TRICAMPEONA �FELICIDADES!</h1></div>
+<div><h1>ESPAÑA TRICAMPEONA ¡FELICIDADES!</h1></div>
 </div>";*/
 
 echo "<br><br>"; //Son las <b>".date("H:i")."</b><br><br>";
 ?>
             <div id="content-left" <? if ($cuenta==1||$clasificacion==1||$clasificacion_1==1||$amigos==1||$apuesta2==1) echo 'style="width:100% !important"'; ?>>
-<?
+<?php
 
 					if ($apuesta==1) include "templates/apuesta.php";
 					else if ($cuenta==1) include "templates/cuenta.php";
@@ -131,7 +131,7 @@ echo "<br><br>"; //Son las <b>".date("H:i")."</b><br><br>";
     <!-- end main -->
     <!-- footer -->
     <div id="footer">
-    <div id="left_footer">Copyright 1994-<?= date("Y") ?> Enroporra
+    <div id="left_footer">Copyright 1994-<?php echo date("Y") ?> Enroporra
     </div>
     <div id="right_footer">
 

@@ -1,4 +1,4 @@
-<?
+<?php
 
 if ($_POST["accion"]=="registrarnick") {
 	$query="SELECT id FROM porrista WHERE nick='".str_replace("'","",$_POST["nick"])."' AND pagado='si'";
@@ -10,7 +10,7 @@ if ($_POST["accion"]=="registrarnick") {
 		$nickRegistrado=$_POST["nick"];
 	}
 	else {
-		$cuenta_nickNoExiste="<p><b><span class='red'>Atención: </span></b> El nick que quieres registrar no existe o no hemos verificado el pago de su apuesta. Por favor inténtalo de nuevo</p>";
+		$cuenta_nickNoExiste="<p><b><span class='red'>AtenciÃ³n: </span></b> El nick que quieres registrar no existe o no hemos verificado el pago de su apuesta. Por favor intÃ©ntalo de nuevo</p>";
 	}
 }
 else {

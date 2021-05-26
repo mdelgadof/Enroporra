@@ -1,4 +1,4 @@
-<?
+<?php
 	if ($_POST["accion"]=="insertar") {
 
 		$nick=trim(str_replace("'","",$_POST["nick"]));
@@ -6,7 +6,7 @@
 		$telefono=trim(str_replace("'","",$_POST["telefono"]));
 		$email=trim(str_replace("'","",$_POST["email"]));
 
-		// Validación de porrista
+		// ValidaciÃ³n de porrista
 		$query="SELECT id FROM porrista WHERE nick='".$nick."' AND id='".$id."'";
 		$res=mysql_query($query,$conexion);
 		if (!mysql_num_rows($res) || $nick=="") {
@@ -17,23 +17,23 @@
 			if ($telefono==$arra["telefono"] && $telefono!="") $ko=false;
 			else if ($email==$arra["email"] && $email!="") $ko=false;
 			if ($ko) {
-				echo "<h1 class='red'>Error</h1><p>El nick que nos das no existe en <b>Enroporra Mundial 2010</b>, o no se ha introducido correctamente, o no coincide con el número de apostante. No hemos podido verificar tu identidad. La apuesta no se ha guardado. Prueba de nuevo <a href='javascript:history.go(-1)'>haciendo click aquí</a>. o escríbenos un email a <a href='mailto:porramundialenro@gmail.com'>porramundialenro@gmail.com</a></p>";
+				echo "<h1 class='red'>Error</h1><p>El nick que nos das no existe en <b>Enroporra Mundial 2010</b>, o no se ha introducido correctamente, o no coincide con el nÃºmero de apostante. No hemos podido verificar tu identidad. La apuesta no se ha guardado. Prueba de nuevo <a href='javascript:history.go(-1)'>haciendo click AquÃ­</a>. o escrÃ­benos un email a <a href='mailto:porramundialenro@gmail.com'>porramundialenro@gmail.com</a></p>";
 				exit();
 			}
 			else $id_porrista=$arra["id"];
 		}
 		else $id_porrista=$id;
 		
-		// Segunda comprobación
+		// Segunda comprobaciÃ³n
 		$query="SELECT id FROM apuesta WHERE id_partido=49 AND id_porrista='".$id_porrista."'";
 		$res=mysql_query($query,$conexion);
 		if (mysql_num_rows($res)) {
-				echo "<h1 class='red'>Error</h1><p>Hemos detectado que ya existe una apuesta previa para el nick ".strtoupper($nick)." en <b>Enroporra Mundial 2010</b>. Hemos guardado esta apuesta, pero hasta que la comisión verifique la válida, mostramos la primera. Por favor, envíanos un email a <a href='mailto:porramundialenro@gmail.com'>porramundialenro@gmail.com</a></p>";
+				echo "<h1 class='red'>Error</h1><p>Hemos detectado que ya existe una apuesta previa para el nick ".strtoupper($nick)." en <b>Enroporra Mundial 2010</b>. Hemos guardado esta apuesta, pero hasta que la comisiÃ³n verifique la vÃ¡lida, mostramos la primera. Por favor, envÃ­anos un email a <a href='mailto:porramundialenro@gmail.com'>porramundialenro@gmail.com</a></p>";
 				$duplicada=true;
 				$id_porrista*=-1;
 		}
 		
-		// Inserción de sus resultados
+		// InserciÃ³n de sus resultados
 		$apuestas=array();
 
 		// Recogida de datos
@@ -48,7 +48,7 @@
 			}
 		}
 		
-		// Inserción en BD
+		// InserciÃ³n en BD
 		foreach ($apuestas as $partido => $datos) {
 
 			$id_equipo1=$datos["e"][1];
@@ -69,7 +69,7 @@
 			$id_porrista*=-1;
 		}
 		else {
-			echo "<h1 class='red'>Apuesta insertada</h1><br><br><p>OK, hemos insertado la apuesta de la segunda fase para el nick <span class='red'>".strtoupper($nick)."</span>. Aquí está el detalle:</p>";
+			echo "<h1 class='red'>Apuesta insertada</h1><br><br><p>OK, hemos insertado la apuesta de la segunda fase para el nick <span class='red'>".strtoupper($nick)."</span>. AquÃ­ estÃ¡ el detalle:</p>";
 		}
 		echo porra($id_porrista,2);
 		echo "<br><br>";
@@ -147,10 +147,10 @@ EOT;
 				<td valign='top' colspan=4>
 					<h1 class='red'>APUESTA EN LA SEGUNDA FASE</h1><br><br>
 					Introduce tu <b>nick</b>: <input type='text' class='inputArea' style='width:300px;' name='nick' id='nick'><br>
-					Introduce tu <b>número de apostante</b>: <input type='text' class='inputArea' style='width:50px;' name='id' id='id'><br>
+					Introduce tu <b>nÃºmero de apostante</b>: <input type='text' class='inputArea' style='width:50px;' name='id' id='id'><br>
 					Introduce tu <b>email</b> (si lo pusiste): <input type='text' class='inputArea' style='width:300px;' name='email'><br>
-					Introduce tu <b>teléfono</b> (si lo pusiste): <input type='text' class='inputArea' style='width:300px;' name='telefono'><br>
-					Rellena tu <b>apuesta</b>. Si marcas empate te preguntaremos quién pasa por penaltis. En estos casos los puntos por acertar el resultado sólo se dan si el ganador es el que tú dices.
+					Introduce tu <b>telÃ©fono</b> (si lo pusiste): <input type='text' class='inputArea' style='width:300px;' name='telefono'><br>
+					Rellena tu <b>apuesta</b>. Si marcas empate te preguntaremos quiÃ©n pasa por penaltis. En estos casos los puntos por acertar el resultado sÃ³lo se dan si el ganador es el que tÃº dices.
 				</td>
 			</tr>
 			<tr>
@@ -173,7 +173,7 @@ EOT;
 			</tr>
 			<tr><td height=20></td></tr>
 			<tr>
-				<td colspan='4' align='center' valign='top'>El árbitro de la final:<br><select id='arbitro' name='arbitro'><option value=''>Elige a tu árbitro para la final...</option>".$optionsArbitros."</select></td>
+				<td colspan='4' align='center' valign='top'>El Ã¡rbitro de la final:<br><select id='arbitro' name='arbitro'><option value=''>Elige a tu Ã¡rbitro para la final...</option>".$optionsArbitros."</select></td>
 			</tr>
 			<tr><td height=20></td></tr>
 			<tr>
@@ -189,7 +189,7 @@ EOT;
 	function revisaForm() {
 		
 		if ($("#nick").val()=="" || $("#id").val()=="") {
-			alert("Sin tu nick o tu número de apostante no podemos validar la apuesta. Si desconoces alguno envíanos un email a porramundialenro@gmail.com");
+			alert("Sin tu nick o tu nÃºmero de apostante no podemos validar la apuesta. Si desconoces alguno envÃ­anos un email a porramundialenro@gmail.com");
 			$("#nick").focus();
 			return false;
 		}
@@ -221,7 +221,7 @@ EOT;
 		}
 
 		if ($("#arbitro").val()=="") {
-			alert("Elige tu árbitro para la final");
+			alert("Elige tu Ã¡rbitro para la final");
 			$("#arbitro").focus();
 			return false;
 		}
@@ -283,7 +283,7 @@ EOT;
   			$("#e_"+arrayEliminatorias[partido]).val($("#e_"+partido+"_"+winner).val());
 		}
 		else {
-   			$("#b_"+arrayEliminatorias[partido]).html("<img src='<?= WEB_ROOT ?>/images/ask.jpg' width=22 height=22>");
+   			$("#b_"+arrayEliminatorias[partido]).html("<img src='<?php echo WEB_ROOT ?>/images/ask.jpg' width=22 height=22>");
    			$("#n_"+arrayEliminatorias[partido]).html("<h2>???</h2>");
    			$("#n2_"+arrayEliminatorias[partido]).html("???");
    			$("#e_"+arrayEliminatorias[partido]).val(0);

@@ -1,4 +1,4 @@
-<?
+<?php
 include "../inc/inc.php";
 $n=trim(str_replace("'","",$_GET["n"]));
 if (strlen($n)<3) echo "LONGITUD_INSUFICIENTE|";

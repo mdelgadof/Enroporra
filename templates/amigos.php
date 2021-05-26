@@ -1,4 +1,4 @@
-<?
+<?php
 echo "<h1 class='red'>Amigos</h1>";
 
 $arrayAmigos=array();
@@ -11,10 +11,10 @@ if (count($arrayAmigos)) {
 	echo "<br><br><h1>Listado total de participantes</h1><br>";
 }
 else {
-	echo "<p>AquÌ tienes un listado de todos los participantes de <b>Enroporra</b>. Selecciona a tus amigos y conocidos
-	(o a los que quieras) y, recargando la p·gina, podr·s ver la clasificaciÛn sÛlo con los nombres que t˙ hayas elegido.
-	Esperamos que te sirva, y te recordamos que esta clasificaciÛn parcial que se publica en AMIGOS no sirve a la hora de
-	repartir ning˙n premio, ya que para esto sÛlo vale la <a href='clasificacion.php'>clasificaciÛn general</a></p>";
+	echo "<p>Aqu√≠ tienes un listado de todos los participantes de <b>Enroporra</b>. Selecciona a tus amigos y conocidos
+	(o a los que quieras) y, recargando la p√°gina, podr√°s ver la clasificaci√≥n s√≥lo con los nombres que t√∫ hayas elegido.
+	Esperamos que te sirva, y te recordamos que esta clasificaci√≥n parcial que se publica en AMIGOS no sirve a la hora de
+	repartir ning√∫n premio, ya que para esto s√≥lo vale la <a href='clasificacion.php'>clasificaci√≥n general</a></p>";
 }
 
 $query="SELECT * FROM porrista WHERE pagado='si' ORDER BY nombre,apellido";
@@ -44,8 +44,8 @@ echo "</table><br><br>";
 			url: "ajax/actualiza_amigos.php",
 			data: "n="+nick+"&v="+valor+"&t="+time,
 			success: function(msg){
-				if (valor) $("#"+nick).html("<font color='green'>OK AÒadido a tus amigos. Recarga la p·gina para ver la clasificaciÛn</font>");
-				else $("#"+nick).html("<font color='red'>OK Eliminado de tus amigos. Recarga la p·gina para ver la clasificaciÛn</font>");
+				if (valor) $("#"+nick).html("<font color='green'>OK A√±adido a tus amigos. Recarga la p√°gina para ver la clasificaci√≥n</font>");
+				else $("#"+nick).html("<font color='red'>OK Eliminado de tus amigos. Recarga la p√°gina para ver la clasificaci√≥n</font>");
       		}
       	});
 

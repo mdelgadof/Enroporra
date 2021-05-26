@@ -1,4 +1,4 @@
-<?
+<?php
 	function formNoticia($id_noticia=0) {
 
 		global $conexion;
@@ -42,7 +42,7 @@
 				<td>
 					<select name='activa' class='inputArea' style='width:50px'>
 					<option value=''></option>
-					<option value='si' ".$selSi.">Sí</option>
+					<option value='si' ".$selSi.">SÃ­</option>
 					<option value='no' ".$selNo.">No</option>
 					</select>
 				</td>

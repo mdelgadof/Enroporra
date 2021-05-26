@@ -1,4 +1,4 @@
-<?
+<?php
 include "../inc/inc.php";
 $v=$_GET["v"];
 $n=$_GET["n"];

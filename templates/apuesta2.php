@@ -1,4 +1,4 @@
-<?
+<?php
 	if ($_POST["accion"]=="insertar") {
 
 		$nick=trim(str_replace("'","",$_POST["nick"]));
@@ -6,7 +6,7 @@
 		$telefono=trim(str_replace("'","",$_POST["telefono"]));
 		$email=trim(str_replace("'","",$_POST["email"]));
 
-		// ValidaciÛn de porrista
+		// Validaci√≥n de porrista
 		$query="SELECT id FROM porrista WHERE nick='".$nick."' AND id='".$id."'";
 		$res=mysql_query($query,$conexion);
 		if (!mysql_num_rows($res) || $nick=="") {
@@ -17,23 +17,23 @@
 			if ($telefono==$arra["telefono"] && $telefono!="") $ko=false;
 			else if ($email==$arra["email"] && $email!="") $ko=false;
 			if ($ko) {
-				echo "<h1 class='red'>Error</h1><p>El nick que nos das no existe en <b>Enroporra ".$NOMBRE_TORNEO."</b>, o no se ha introducido correctamente, o no coincide con el n˙mero de apostante. No hemos podido verificar tu identidad. La apuesta no se ha guardado. Prueba de nuevo <a href='javascript:history.go(-1)'>haciendo click aquÌ</a>. o escrÌbenos un email a <a href='mailto:".$EMAIL_ADMIN."'>".$EMAIL_ADMIN."</a></p>";
+				echo "<h1 class='red'>Error</h1><p>El nick que nos das no existe en <b>Enroporra ".$NOMBRE_TORNEO."</b>, o no se ha introducido correctamente, o no coincide con el n√∫mero de apostante. No hemos podido verificar tu identidad. La apuesta no se ha guardado. Prueba de nuevo <a href='javascript:history.go(-1)'>haciendo click Aqu√≠</a>. o escr√≠benos un email a <a href='mailto:".$EMAIL_ADMIN."'>".$EMAIL_ADMIN."</a></p>";
 				exit();
 			}
 			else $id_porrista=$arra["id"];
 		}
 		else $id_porrista=$id;
 
-		// Segunda comprobaciÛn
+		// Segunda comprobaci√≥n
 		$query="SELECT id FROM apuesta WHERE id_partido=".$PRIMER_PARTIDO_SEGUNDA_FASE." AND id_porrista='".$id_porrista."'";
 		$res=mysql_query($query,$conexion);
 		if (mysql_num_rows($res)) {
-				echo "<h1 class='red'>Error</h1><p>Hemos detectado que ya existe una apuesta previa para el nick ".strtoupper($nick)." en <b>Enroporra ".$NOMBRE_TORNEO."</b>. Hemos guardado esta apuesta, pero hasta que la comisiÛn verifique la v·lida, mostramos la primera. Por favor, envÌanos un email a <a href='mailto:".$EMAIL_ADMIN."'>".$EMAIL_ADMIN."</a></p>";
+				echo "<h1 class='red'>Error</h1><p>Hemos detectado que ya existe una apuesta previa para el nick ".strtoupper($nick)." en <b>Enroporra ".$NOMBRE_TORNEO."</b>. Hemos guardado esta apuesta, pero hasta que la comisi√≥n verifique la v√°lida, mostramos la primera. Por favor, env√≠anos un email a <a href='mailto:".$EMAIL_ADMIN."'>".$EMAIL_ADMIN."</a></p>";
 				$duplicada=true;
 				$id_porrista*=-1;
 		}
 
-		// InserciÛn de sus resultados
+		// Inserci√≥n de sus resultados
 		$apuestas=array();
 
 		// Recogida de datos
@@ -48,7 +48,7 @@
 			}
 		}
 
-		// InserciÛn en BD
+		// Inserci√≥n en BD
 		foreach ($apuestas as $partido => $datos) {
 
 			$id_equipo1=$datos["e"][1];
@@ -69,7 +69,7 @@
 			$id_porrista*=-1;
 		}
 		else {
-			echo "<h1 class='red'>Apuesta insertada</h1><br><br><p>OK, hemos insertado la apuesta de la segunda fase para el nick <span class='red'>".strtoupper($nick)."</span>. AquÌ est· el detalle:</p>";
+			echo "<h1 class='red'>Apuesta insertada</h1><br><br><p>OK, hemos insertado la apuesta de la segunda fase para el nick <span class='red'>".strtoupper($nick)."</span>. Aqu√≠ est√° el detalle:</p>";
 		}
 		echo porra($id_porrista,2);
 		echo "<br><br>";
@@ -80,8 +80,8 @@
 
 		// Cerramos definitivamente apuestas media hora antes del primer partido de la segunda fase
         if (time()>=(strtotime($FECHA_PRIMER_PARTIDO_SEGUNDA_FASE)-30*60)) {
-			echo "<h1 class='red'>°AHORA SÕ QUE LA SUERTE EST¡ ECHADA!</h1>
-			<p><b>Se cerrÛ el plazo definitivo de apuestas</b> La ComisiÛn de <b>Enroporra</b> ha cerrado las apuestas porque ya ha empezado la fase de eliminatorias de ".$NOMBRE_TORNEO.". De entre los apostantes que hayan rellenado esta segunda fase saldr· nuestro ganador. °Mucha suerte a todos!</p>";
+			echo "<h1 class='red'>¬°AHORA S√ç QUE LA SUERTE EST√Å ECHADA!</h1>
+			<p><b>Se cerr√≥ el plazo definitivo de apuestas</b> La Comisi√≥n de <b>Enroporra</b> ha cerrado las apuestas porque ya ha empezado la fase de eliminatorias de ".$NOMBRE_TORNEO.". De entre los apostantes que hayan rellenado esta segunda fase saldr√° nuestro ganador. ¬°Mucha suerte a todos!</p>";
 			exit();
 		}
 
@@ -159,11 +159,11 @@ EOT;
 					<h1 class='red'>APUESTA EN LA SEGUNDA FASE</h1><br><br>
 					Introduce tu <b>nick</b>: <input type='text' class='inputArea' style='width:300px;' name='nick' id='nick'><br><br>
                                         <span class='red'><b>Debes rellenar al menos uno de los tres campos siguientes para poder identificarte:</b></span><br><br>
-					Introduce tu <b>n˙mero de apostante</b> (si no lo recuerdas dÈjalo en blanco):<input type='text' class='inputArea' style='width:50px;' name='id' id='id'><br>
+					Introduce tu <b>n√∫mero de apostante</b> (si no lo recuerdas d√©jalo en blanco):<input type='text' class='inputArea' style='width:50px;' name='id' id='id'><br>
 					Introduce tu <b>email</b> (si lo pusiste): <input type='text' class='inputArea' style='width:300px;' name='email' id='email'><br>
-					Introduce tu <b>telÈfono</b> (si lo pusiste): <input type='text' class='inputArea' style='width:300px;' name='telefono' id='telefono'><br>
-                                        <span class='red'><b>Si no recuerdas ninguno de los tres, envÌanos un mail a</span> <a href='mailto:".$EMAIL_ADMIN."'>".$EMAIL_ADMIN."</a></b><br><br>
-					Rellena tu <b>apuesta</b>. Si marcas empate te preguntaremos quiÈn pasa por penaltis. En estos casos los puntos por acertar el resultado sÛlo se dan si el ganador es el que t˙ dices.
+					Introduce tu <b>tel√©fono</b> (si lo pusiste): <input type='text' class='inputArea' style='width:300px;' name='telefono' id='telefono'><br>
+                                        <span class='red'><b>Si no recuerdas ninguno de los tres, env√≠anos un mail a</span> <a href='mailto:".$EMAIL_ADMIN."'>".$EMAIL_ADMIN."</a></b><br><br>
+					Rellena tu <b>apuesta</b>. Si marcas empate te preguntaremos qui√©n pasa por penaltis. En estos casos los puntos por acertar el resultado s√≥lo se dan si el ganador es el que t√∫ dices.
 				</td>
 			</tr>";
 
@@ -201,7 +201,7 @@ EOT;
     echo"
 			    <td height=20></td></tr>
 			<tr>
-				<td colspan='4' align='center' valign='top'>El ·rbitro de la final:<br><select id='arbitro' name='arbitro'><option value=''>Elige a tu ·rbitro para la final...</option>".$optionsArbitros."</select></td>
+				<td colspan='4' align='center' valign='top'>El √°rbitro de la final:<br><select id='arbitro' name='arbitro'><option value=''>Elige a tu √°rbitro para la final...</option>".$optionsArbitros."</select></td>
 			</tr>
 			<tr><td height=20></td></tr>
 			<tr>
@@ -217,13 +217,13 @@ EOT;
 	function revisaForm() {
 
 		if ($("#nick").val()=="") {
-			alert("Sin tu nick no podemos validar la apuesta. Si no lo recuerdas envÌanos un email a <?= $EMAIL_ADMIN ?>");
+			alert("Sin tu nick no podemos validar la apuesta. Si no lo recuerdas env√≠anos un email a <?php echo $EMAIL_ADMIN ?>");
 			$("#nick").focus();
 			return false;
 		}
 
 		if ($("#id").val()=="" && $("#telefono").val()=="" && $("#email").val()=="") {
-			alert("Necesitamos al menos uno de los tres campos (n˙mero de apostante, telÈfono o email). Si no recuerdas ninguno envÌanos un email a <?= $EMAIL_ADMIN ?>");
+			alert("Necesitamos al menos uno de los tres campos (n√∫mero de apostante, tel√©fono o email). Si no recuerdas ninguno env√≠anos un email a <?php echo $EMAIL_ADMIN ?>");
 			$("#email").focus();
 			return false;
 		}
@@ -255,7 +255,7 @@ EOT;
 		}
 
 		if ($("#arbitro").val()=="") {
-			alert("Elige tu ·rbitro para la final");
+			alert("Elige tu √°rbitro para la final");
 			$("#arbitro").focus();
 			return false;
 		}
@@ -277,7 +277,7 @@ EOT;
             $res=mysql_query($query,$conexion);
             while ($arra=mysql_fetch_array($res)) {
             ?>
-                arrayEliminatorias[<?= $arra["id"] ?>] = "<?= $arra["vencedor_eliminatoria"] ?>";
+                arrayEliminatorias[<?php echo $arra["id"] ?>] = "<?php echo $arra["vencedor_eliminatoria"] ?>";
         <?php
             }
         ?>
@@ -310,7 +310,7 @@ EOT;
   			$("#e_"+arrayEliminatorias[partido]).val($("#e_"+partido+"_"+winner).val());
 		}
 		else {
-   			$("#b_"+arrayEliminatorias[partido]).html("<img src='<?= WEB_ROOT ?>/images/ask.jpg' width=22 height=22>");
+   			$("#b_"+arrayEliminatorias[partido]).html("<img src='<?php echo WEB_ROOT ?>/images/ask.jpg' width=22 height=22>");
    			$("#n_"+arrayEliminatorias[partido]).html("<h2>???</h2>");
    			$("#n2_"+arrayEliminatorias[partido]).html("???");
    			$("#e_"+arrayEliminatorias[partido]).val(0);

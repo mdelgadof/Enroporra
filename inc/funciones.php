@@ -1,4 +1,4 @@
-<?
+<?php
 
 function porra($id_porrista,$fase=1,$admin=false) {
 
@@ -389,7 +389,7 @@ function partido($id_partido) {
 	/*else {
 		$devuelve.="
 		<tr>
-			<td align='center' colspan='2'><a href='cuenta.php'>�Y qu� apost� yo?</a></span></td>
+			<td align='center' colspan='2'><a href='cuenta.php'>¿Y qué aposté yo?</a></span></td>
 		</tr>";
 	}*/
 
@@ -404,7 +404,7 @@ function normalizaNombre($nombre) {
 
 	include(DOCUMENT_ROOT."/inc/apellidosConTilde.php");
 
-	$nombre=ucwords(strtr(mb_strtolower($nombre), "�������", "�������"));
+	$nombre=ucwords(mb_strtolower($nombre));
 	$nombre=str_replace(" De "," de ",str_replace(" Del "," del ",str_replace(" De La "," de la ",str_replace(" De Los "," de los ",str_replace(" De Las "," de las ",str_replace(" Y "," y ",str_replace(" E "," e ",$nombre)))))));
 	for ($i=0; $i<strlen($nombre); $i++) {
 		if ($nombre[$i]=="-"||$nombre[$i]=="'") $nombre[$i+1]=ucfirst(substr($nombre,$i+1,1));
@@ -436,7 +436,7 @@ function apuestaPartidos($id_porrista,$proximosPartidos) {
 
 function cmp($a, $b) {
    	if ($a["puntos"] == $b["puntos"]) {
-       	return (strtoupper(str_replace("�","A",str_replace("�","O",$a["nombre"]))) < strtoupper(str_replace("�","A",str_replace("�","O",$b["nombre"])))) ? -1 : 1;
+       	return (strtoupper(str_replace("Á","A",str_replace("Ó","O",$a["nombre"]))) < strtoupper(str_replace("Á","A",str_replace("Ó","O",$b["nombre"])))) ? -1 : 1;
    	}
    	return ($a["puntos"] < $b["puntos"]) ? 1 : -1;
 }

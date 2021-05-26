@@ -1,4 +1,4 @@
-<?
+<?php
 $query="SELECT * FROM equipo ORDER BY id";
 $res=mysql_query($query,$conexion);
 $contador=0;

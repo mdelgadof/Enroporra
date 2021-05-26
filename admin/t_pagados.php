@@ -1,6 +1,6 @@
-<h1 class='red'>AdministraciÛn de pagos</h1>
-<p>A continuaciÛn va un listado de todas las porras recibidas en el sistema. Los no pagados salen antes, y luego los ordenamos por n˙mero de apostante, los m·s nuevos primero. Simplemente marcando el check que hay a la izquierda de cada n˙mero marcamos la apuesta como pagada, y quit·ndolo la marcamos como no pagada. A todos los efectos de clasificaciÛn, en la p·gina de cara al p˙blico sÛlo saldr·n las porras marcadas como pagadas aquÌ.</p>
-<?
+<h1 class='red'>Administraci√≥n de pagos</h1>
+<p>A continuaci√≥n va un listado de todas las porras recibidas en el sistema. Los no pagados salen antes, y luego los ordenamos por n√∫mero de apostante, los m√°s nuevos primero. Simplemente marcando el check que hay a la izquierda de cada n√∫mero marcamos la apuesta como pagada, y quit√°ndolo la marcamos como no pagada. A todos los efectos de clasificaci√≥n, en la p√°gina de cara al p√∫blico s√≥lo saldr√°n las porras marcadas como pagadas Aqu√≠.</p>
+<?php
 
 $query="SELECT pagado,count(*) s FROM porrista GROUP BY pagado";
 $res=mysql_query($query,$conexion);
