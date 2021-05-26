@@ -30,6 +30,7 @@ You can also purchase a PSD-file for this template.
 			/*echo porra($id,2,true);
 			echo "<br>";*/
 			echo porra($id);
+			echo porra($id,2);
 ?>
 		<center><br><br><input type='button' value='Cerrar' onClick='window.close()'></center>
         </div>
