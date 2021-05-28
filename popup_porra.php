@@ -1,8 +1,8 @@
-<? include "inc/inc.php";
+<?php include "inc/inc.php";
 $nick=str_replace("'","",$_GET["nick"]);
 $query="SELECT id,nombre,apellido FROM porrista WHERE nick='$nick'";
-$res=mysql_query($query,$conexion);
-$arra=mysql_fetch_array($res);
+$res=bd_getAll($query,$conexion);
+$arra=bd_fetch($res);
 $id=$arra["id"];
 $nombre=$arra["nombre"]." ".$arra["apellido"];
 if (!is_numeric($id)) exit();

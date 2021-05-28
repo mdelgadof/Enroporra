@@ -3,10 +3,10 @@
 <?php
 
 $query="SELECT pagado,email FROM porrista WHERE email!=''";
-$res=mysql_query($query,$conexion);
+$res=bd_getAll($query,$conexion);
 $pagados=$nopagados=0;
 $stringPagados=$stringNoPagados="";
-while ($arra=mysql_fetch_array($res)) {
+while ($arra=bd_fetch($res)) {
 	if ($arra["pagado"]=="si") {
             $pagados++;
             $stringPagados.=$arra["email"]."; ";

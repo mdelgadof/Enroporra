@@ -1,21 +1,22 @@
 <?php
-$NOMBRE_TORNEO = "la Eurocopa 2016";
-$ENLACE_BASES = "docs/EnroPorraFrancia2016.pdf";
-$ENLACE_PARTIDOS = "http://es.uefa.com/uefaeuro/season=2016/matches/index.html#md/1";
-$ENLACE_GOLEADORES = "http://es.uefa.com/uefaeuro/season=2016/players/index.html";
+$NOMBRE_TORNEO = "la Eurocopa 2020";
+$ENLACE_BASES = "docs/EnroPorra2020.pdf";
+$ENLACE_PARTIDOS = "https://es.uefa.com/uefaeuro-2020/fixtures-results/";
+$ENLACE_GOLEADORES = "https://es.uefa.com/uefaeuro-2020/news/0257-0df9be9bf004-e7003de3d395-1000--records-y-estadisticas/";
 $PRIMERA_ELIMINATORIA = "octavos de final";
-$NOMBRE_SIGUIENTE_TORNEO = "el Mundial 2018";
-$NOMBRE_BANCO = "Bankia";
-$CUENTA_BANCO = "IBAN ES44 2038 9011 5230 0045 4372";
+$NOMBRE_SIGUIENTE_TORNEO = "el Mundial 2022";
+$NOMBRE_BANCO = "BBVA";
+$CUENTA_BANCO = "ES43 0182 4028 7602 0156 3306";
 $TITULAR_BANCO = "Federico de la Torriente Guti&eacute;rrez";
+$BIZUM = "649927465";
 $EMAIL_ADMIN = "comisionporra@gmail.com";
 $PRIMER_PARTIDO_SEGUNDA_FASE = 437;
 $PARTIDOS_SEGUNDA_FASE=15;
-$FECHA_PRIMER_PARTIDO="2016-06-10 21:00:00";
-$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE="2016-06-25 15:00:00";
-$FECHA_APERTURA_PORRA_SEGUNDA_FASE="2016-06-22 23:15:00";
-$ID_ARBITRO_FINAL=404;
-$NOMBRE_ARBITRO_FINAL="Mark Clattenburg";
-$PAIS_ARBITRO_FINAL="england";
-$ARRAY_PICHICHIS=array(474);
+$FECHA_PRIMER_PARTIDO="2021-06-11 21:00:00";
+$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE="2021-06-26 18:00:00";
+$FECHA_APERTURA_PORRA_SEGUNDA_FASE="2021-06-23 23:15:00";
+$ID_ARBITRO_FINAL=0;
+$NOMBRE_ARBITRO_FINAL="";
+$PAIS_ARBITRO_FINAL="";
+$ARRAY_PICHICHIS=array();
 ?>

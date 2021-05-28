@@ -5,8 +5,8 @@
 
 		if ($id_noticia) {
 			$query="SELECT * FROM noticias WHERE id='".$id_noticia."'";
-			$res=mysql_query($query,$conexion);
-			$arra=mysql_fetch_array($res);
+			$res=bd_getAll($query,$conexion);
+			$arra=bd_fetch($res);
 			$titular=$arra["titular"];
 			$cuerpo=str_replace("<br />","",$arra["cuerpo"]);
 			$selSi = ($arra["activa"]=="si") ? "selected":"";
@@ -70,7 +70,7 @@
 
 		$query.=$queryD;
 		if ($_POST["id"]) $query.=" WHERE id='".$_POST["id"]."'";
-		$res=mysql_query($query,$conexion);
+		$res=bd_getAll($query,$conexion);
 
 		echo "<h1 class='red'>Noticia insertada/modificada correctamente</h1><p>OK, se han insertado/modificado la noticia.</p>";
 
@@ -81,9 +81,9 @@
 
 	echo "<h1 class='red'>Modificar noticias</h1>";
 	$query="SELECT * FROM noticias ORDER BY fecha DESC";
-	$res=mysql_query($query,$conexion);
+	$res=bd_getAll($query,$conexion);
 
-	while ($arra=mysql_fetch_array($res)) {
+	while ($arra=bd_fetch($res)) {
 		echo "<p>".formNoticia($arra["id"])."</p>";
 	}
 	echo "<br><br>";

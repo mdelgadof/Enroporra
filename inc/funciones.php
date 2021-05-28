@@ -2,15 +2,15 @@
 
 function porra($id_porrista,$fase=1,$admin=false) {
 
-	global $conexion,$ID_ARBITRO_FINAL;
+	global $conexion,$ID_ARBITRO_FINAL,$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE;
 
 	$query="SELECT j.id,j.nombre,e.nombre pais, e.bandera FROM equipo e,jugador j,porrista p WHERE j.id_equipo=e.id AND j.id=p.id_goleador AND p.id='".$id_porrista."'";
 	if ($fase>1) $query="SELECT j.id,j.nombre,e.nombre pais, e.bandera, a.nombre arbitro FROM equipo e,jugador j,porrista p,arbitro a WHERE j.id_equipo=e.id AND j.id=p.id_goleador AND a.id=p.id_arbitro AND p.id='".$id_porrista."'";
-	$res=mysql_query($query,$conexion);
-	$arra=mysql_fetch_array($res);
+	$res=bd_getAll($query,$conexion);
+	$arra=bd_fetch($res);
 
-        if ($fase>1 && date("Y-m-d H:i:s")<"2012-06-21 20:45:00" && !$admin) {
-            if ($arra["arbitro"]!="") "Este jugador ha realizado ya su apuesta para la segunda fase. La ver&aacute;s cuando empiece el primer partido de las elimintatorias :)";
+        if ($fase>1 && date("Y-m-d H:i:s")<$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE && !$admin) {
+            if ($arra["arbitro"]!="") "Este jugador ha realizado ya su apuesta para la segunda fase. La ver&aacute;s cuando empiece el primer partido de las eliminatorias :)";
             else echo "Este jugador todav&iacute;a no ha realizado su apuesta para la segunda fase.";
             return;
         }
@@ -20,9 +20,9 @@ function porra($id_porrista,$fase=1,$admin=false) {
 
 	$condicionFase = ($fase>1) ? " AND p.fase>1 ":" AND p.fase=1 ";
 	$query="SELECT e1.nombre nombre1, e1.bandera bandera1, e2.nombre nombre2, e2.bandera bandera2, a.resultado1, a.resultado2, p.fecha, p.hora, a.quiniela FROM apuesta a, equipo e1, equipo e2, partido p WHERE a.id_partido=p.id AND a.id_equipo1=e1.id AND a.id_equipo2=e2.id AND a.id_porrista='".$id_porrista."' ".$condicionFase." ORDER BY fecha,hora";
-	$res=mysql_query($query,$conexion);
+	$res=bd_getAll($query,$conexion);
 
-	while ($arra=mysql_fetch_array($res)) {
+	while ($arra=bd_fetch($res)) {
 		if ($arra["resultado1"]==$arra["resultado2"] && $fase>1) {
 			$empate="(gana <b>".$arra["nombre".$arra["quiniela"]]."</b> por penaltis)";
 		}
@@ -38,8 +38,8 @@ function puntos($id_porrista) {
 
 	// Identidad del porrista
 	$query="SELECT p.nick,concat(p.nombre,' ',p.apellido) nombreporrista,p.id_arbitro,j.id,j.nombre,e.nombre equipo,e.id idEquipo FROM porrista p,jugador j, equipo e WHERE p.id_goleador=j.id AND p.id='".$id_porrista."' AND j.id_equipo=e.id";
-	$res=mysql_query($query,$conexion);
-	$arra=mysql_fetch_array($res);
+	$res=bd_getAll($query,$conexion);
+	$arra=bd_fetch($res);
 	$nick=$arra["nick"];
 	$id_goleador=$arra["id"];
 	$id_arbitro=$arra["id_arbitro"];
@@ -53,7 +53,7 @@ function puntos($id_porrista) {
 		e3.nombre equipoapuesta1, e3.bandera banderaapuesta1, e4.nombre equipoapuesta2, e4.bandera banderaapuesta2,
 		p.fecha, p.hora, p.fase, p.resultado1 r1, p.resultado2 r2, a.resultado1 r3, a.resultado2 r4,
 		p.id idPartido, p.quiniela q1, a.quiniela q2 FROM partido p LEFT JOIN apuesta a ON a.id_partido=p.id,equipo e1,equipo e2,equipo e3,equipo e4 WHERE p.id_equipo1=e1.id AND p.id_equipo2=e2.id AND a.id_equipo1=e3.id AND a.id_equipo2=e4.id AND a.id_porrista='".$id_porrista."' AND p.resultado1>=0 AND (p.id_equipo1='".$idEquipoGoleador."' OR p.id_equipo2='".$idEquipoGoleador."' OR a.quiniela=p.quiniela) ORDER BY p.fecha DESC, p.hora DESC";
-	$res=mysql_query($query,$conexion);
+	$res=bd_getAll($query,$conexion);
 
 	$puntos=$partidosAcertados=$resultadosAcertados=0; $stringDevuelve="";
 
@@ -95,7 +95,7 @@ function puntos($id_porrista) {
 
 	}
 
-	while ($arra=mysql_fetch_array($res)) {
+	while ($arra=bd_fetch($res)) {
 		$stringPartido=""; $stringValido=false;
 		$stringPartido="<span class='red'>".$rotulo[$arra["fase"]]."</span><br>";
 		$stringPartido.="<img src='".WEB_ROOT."/images/badges/".$arra["banderareal1"]."' width=16 height=16> <b>".mb_strtoupper($arra["equiporeal1"])."</b> <span class='red'>".$arra["r1"]."</span> ";
@@ -135,8 +135,8 @@ function puntos($id_porrista) {
 		}
 		if ($equipoGoleador==$arra["equiporeal1"] || $equipoGoleador==$arra["equiporeal2"]) {
 			$query="SELECT count(*) g FROM goles WHERE id_goleador='".$id_goleador."' AND id_partido='".$arra["idPartido"]."'";
-			$res2=mysql_query($query,$conexion);
-			$arra2=mysql_fetch_array($res2);
+			$res2=bd_getAll($query,$conexion);
+			$arra2=bd_fetch($res2);
 			$goles=$arra2["g"];
 
 			if ($goles) {
@@ -165,9 +165,9 @@ function optionsGoleadores($selected="",$id_equipo1=0,$id_equipo2=0) {
 	if ($id_equipo1) $query1.=")";
 
 	$query="SELECT j.id,j.nombre,e.nombre pais FROM equipo e,jugador j WHERE j.id_equipo=e.id $query1 ORDER BY nombre";
-	$res=mysql_query($query,$conexion);
+	$res=bd_getAll($query,$conexion);
 
-	while ($arra=mysql_fetch_array($res)) {
+	while ($arra=bd_fetch($res)) {
 		$sel = ($arra["id"]==$selected) ? "selected":"";
 		$devuelve.= "<option value='".$arra["id"]."' ".$sel.">".$arra["nombre"]." (".$arra["pais"].")</option>";
 	}
@@ -181,8 +181,8 @@ function partido_jugado($id_partido) {
 	global $conexion,$nickRegistrado,$FECHA_PRIMER_PARTIDO,$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE;
 
 	$query="SELECT p.*,e1.nombre equipo1,e2.nombre equipo2,e1.bandera bandera1,e2.bandera bandera2 FROM partido p LEFT JOIN equipo e1 ON e1.id=p.id_equipo1 LEFT JOIN equipo e2 ON e2.id=p.id_equipo2 WHERE p.id='$id_partido'";
-	$res=mysql_query($query,$conexion);
-	$partido=mysql_fetch_array($res);
+	$res=bd_getAll($query,$conexion);
+	$partido=bd_fetch($res);
 	if ($partido["equipo1"]=="") {
 		$partido["equipo1"]="???";
 		$partido["bandera1"]="../ask.jpg";
@@ -195,26 +195,26 @@ function partido_jugado($id_partido) {
 	if ($partido["fase"]==1 || $partido["fase"]==2) {
 
 		$query="SELECT count(*) s FROM apuesta WHERE id_partido='$id_partido' AND quiniela='".$partido["quiniela"]."'";
-		$res=mysql_query($query,$conexion);
-		$temp=mysql_fetch_array($res);
+		$res=bd_getAll($query,$conexion);
+		$temp=bd_fetch($res);
 		$acertantes_quiniela=$temp[0];
 		
 		$query="SELECT count(*) s FROM apuesta WHERE id_partido='$id_partido' AND resultado1='".$partido["resultado1"]."' AND resultado2='".$partido["resultado2"]."'";
-		$res=mysql_query($query,$conexion);
-		$temp=mysql_fetch_array($res);
+		$res=bd_getAll($query,$conexion);
+		$temp=bd_fetch($res);
 		$acertantes_resultado=$temp[0];
 	}
 	
 	else {
 
 		$query="SELECT count(*) s FROM apuesta WHERE id_partido='$id_partido' AND quiniela='".$partido["quiniela"]."' AND ((id_equipo1='".$partido["id_equipo1"]."' AND quiniela='1') OR (id_equipo2='".$partido["id_equipo2"]."' AND quiniela='2'))";
-		$res=mysql_query($query,$conexion);
-		$temp=mysql_fetch_array($res);
+		$res=bd_getAll($query,$conexion);
+		$temp=bd_fetch($res);
 		$acertantes_quiniela=$temp[0];
 		
 		$query="SELECT count(*) s FROM apuesta WHERE id_partido='$id_partido' AND quiniela='".$partido["quiniela"]."' AND ((id_equipo1='".$partido["id_equipo1"]."' AND quiniela='1') OR (id_equipo2='".$partido["id_equipo2"]."' AND quiniela='2')) AND resultado1='".$partido["resultado1"]."' AND resultado2='".$partido["resultado2"]."'";
-		$res=mysql_query($query,$conexion);
-		$temp=mysql_fetch_array($res);
+		$res=bd_getAll($query,$conexion);
+		$temp=bd_fetch($res);
 		$acertantes_resultado=$temp[0];
 	}
 
@@ -236,8 +236,8 @@ function partido_jugado($id_partido) {
 
 		if ($partido["fase"]==1) {
 		$query="SELECT a.resultado1,a.resultado2 FROM apuesta a, porrista p WHERE a.id_porrista=p.id AND a.id_partido='".$id_partido."' AND p.nick='".$nickRegistrado."'";
-		$res=mysql_query($query,$conexion);
-		$arra=mysql_fetch_array($res);
+		$res=bd_getAll($query,$conexion);
+		$arra=bd_fetch($res);
 		$resultadoNick=$arra["resultado1"]."-".$arra["resultado2"];
 
 		$devuelve.="
@@ -264,8 +264,8 @@ function partido($id_partido) {
 	$diasSemana=array("Domingo","Lunes","Martes","Mi&eacute;rcoles","Jueves","Viernes","S&aacute;bado");
 
 	$query="SELECT p.*,e1.nombre equipo1,e2.nombre equipo2,e1.bandera bandera1,e2.bandera bandera2 FROM partido p LEFT JOIN equipo e1 ON e1.id=p.id_equipo1 LEFT JOIN equipo e2 ON e2.id=p.id_equipo2 WHERE p.id='$id_partido'";
-	$res=mysql_query($query,$conexion);
-	$partido=mysql_fetch_array($res);
+	$res=bd_getAll($query,$conexion);
+	$partido=bd_fetch($res);
 	if ($partido["equipo1"]=="") {
 		$partido["equipo1"]="???";
 		$partido["bandera1"]="../ask.jpg";
@@ -286,8 +286,8 @@ function partido($id_partido) {
 	if ($partido["fase"]==1) {
 
 		$query="SELECT quiniela,count(*) s FROM apuesta WHERE id_partido='$id_partido' GROUP BY quiniela";
-		$res=mysql_query($query,$conexion);
-		while ($arra=mysql_fetch_array($res)) {
+		$res=bd_getAll($query,$conexion);
+		while ($arra=bd_fetch($res)) {
 			$quinielas[$arra["quiniela"]]=$arra["s"];
 		}
 
@@ -302,30 +302,30 @@ function partido($id_partido) {
 		$pronosticos=array(); $totalPronosticos=0; $pronString="";
 
 		$query="SELECT id_equipo1,count(*) s FROM apuesta WHERE quiniela='1' AND id_partido='".$id_partido."' AND id_equipo1!=0 GROUP BY id_equipo1";
-		$res=mysql_query($query,$conexion);
-		while ($arra=mysql_fetch_array($res)) {
+		$res=bd_getAll($query,$conexion);
+		while ($arra=bd_fetch($res)) {
 			$pronosticos[$arra["id_equipo1"]]=$arra["s"];
 			$totalPronosticos+=$arra["s"];
 		}
 		$query="SELECT id_equipo2,count(*) s FROM apuesta WHERE quiniela='2' AND id_partido='".$id_partido."' AND id_equipo2!=0 GROUP BY id_equipo2";
-		$res=mysql_query($query,$conexion);
-		while ($arra=mysql_fetch_array($res)) {
+		$res=bd_getAll($query,$conexion);
+		while ($arra=bd_fetch($res)) {
 			$pronosticos[$arra["id_equipo2"]]=$arra["s"];
 			$totalPronosticos+=$arra["s"];
 		}
 		arsort($pronosticos);
 		foreach($pronosticos as $equipo => $pronostico) {
 			$query="SELECT nombre,bandera FROM equipo WHERE id='".$equipo."'";
-			$res=mysql_query($query,$conexion);
-			$arra=mysql_fetch_array($res);
+			$res=bd_getAll($query,$conexion);
+			$arra=bd_fetch($res);
 			$pronString.="<img src='".WEB_ROOT."/images/badges/".$arra["bandera"]."' width=20 height=20> ".$arra["nombre"].": <b>".number_format($pronostico*100/$totalPronosticos,1)."%</b><br>";
 		}
 
 	}
 
 	$query="SELECT CONCAT(resultado1,'-',resultado2) r,count(*) s FROM apuesta WHERE id_partido='$id_partido' GROUP BY r ORDER BY s DESC";
-	$res=mysql_query($query,$conexion);
-	$arra=mysql_fetch_array($res);
+	$res=bd_getAll($query,$conexion);
+	$arra=bd_fetch($res);
 	$resultado=$arra["r"];
 	$veces=$arra["s"];
 
@@ -374,8 +374,8 @@ function partido($id_partido) {
 
 		if ($partido["fase"]==1) {
 		$query="SELECT a.resultado1,a.resultado2 FROM apuesta a, porrista p WHERE a.id_porrista=p.id AND a.id_partido='".$id_partido."' AND p.nick='".$nickRegistrado."'";
-		$res=mysql_query($query,$conexion);
-		$arra=mysql_fetch_array($res);
+		$res=bd_getAll($query,$conexion);
+		$arra=bd_fetch($res);
 		$resultadoNick=$arra["resultado1"]."-".$arra["resultado2"];
 
 		$devuelve.="
@@ -425,10 +425,10 @@ function apuestaPartidos($id_porrista,$proximosPartidos) {
 	foreach ($proximosPartidos as $partido) {
 		if ($partido==363) continue;
 		$query="SELECT e1.bandera bandera1,e2.bandera bandera2,a.resultado1,a.resultado2 FROM equipo e1,equipo e2,apuesta a WHERE a.id_equipo1=e1.id AND a.id_equipo2=e2.id AND a.id_porrista='$id_porrista' AND a.id_partido='$partido'";
-		$res=mysql_query($query,$conexion);
-		$arra=mysql_fetch_array($res);
-		if ($num=mysql_num_rows($res))
-			$devuelve.="<img src='".WEB_ROOT."/images/badges/".$arra["bandera1"]."' width=20 height=20> <span class='red'><b>".$arra["resultado1"]."-".$arra["resultado2"]."</b></span> <img src='".WEB_ROOT."/images/badges/".$arra["bandera2"]."' width=20 height=20>&nbsp;&nbsp;&nbsp;&nbsp;";
+		$res=bd_getAll($query,$conexion);
+		$arra=bd_fetch($res);
+		if ($num=bd_num($res))
+			$devuelve.="<span style='position:relative;top:4px'><img src='".WEB_ROOT."/images/badges/".$arra["bandera1"]."' width=20 height=20></span> <span class='red'><b>".$arra["resultado1"]."-".$arra["resultado2"]."</b></span> <span style='position:relative;top:4px'><img src='".WEB_ROOT."/images/badges/".$arra["bandera2"]."' width=20 height=20></span>&nbsp;&nbsp;&nbsp;&nbsp;";
 	}
 
 	return $devuelve;
@@ -470,8 +470,8 @@ function clasificacion($tipo="completa") {
 	}
 
 	$query="SELECT count(*) c FROM partido WHERE fecha<='".date("Y-m-d")."' AND resultado1>=0";
-	$res=mysql_query($query,$conexion);
-	$arra=mysql_fetch_array($res);
+	$res=bd_getAll($query,$conexion);
+	$arra=bd_fetch($res);
 	$partidos=$arra["c"];
 
 	if ($partidos) {
@@ -480,18 +480,18 @@ function clasificacion($tipo="completa") {
 		$devuelve.= "Clasificaci&oacute;n $cabecera a d&iacute;a de hoy (<span class='red'><b>$partidos</b></span> partidos disputados y apuntados) :<br><br>";
 
 		$query="SELECT id,fase FROM partido WHERE resultado1<0 ORDER BY fecha,hora LIMIT 4";
-		$res=mysql_query($query,$conexion);
+		$res=bd_getAll($query,$conexion);
 		$proximosPartidos=array();
-		while ($arra=mysql_fetch_array($res)) {
+		while ($arra=bd_fetch($res)) {
 			if ($arra["fase"]==1 || ($arra["fase"]>1 && date("Y-m-d H:i:s")>$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE))
                         $proximosPartidos[]=$arra["id"];
 		}
 
 		$arrayPorristas=array();
 		$query="SELECT id,nick,nombre,apellido,id_goleador,id_arbitro FROM porrista WHERE pagado='si' ".$condicionQuery;
-		$res=mysql_query($query,$conexion);
+		$res=bd_getAll($query,$conexion);
 		$i=0;
-		while ($arra=mysql_fetch_array($res)) {
+		while ($arra=bd_fetch($res)) {
 			$arrayPorristas[$i]["nick"]=$arra["nick"];
 			$arrayPorristas[$i]["id"]=$arra["id"];
 			$arrayPorristas[$i]["nombre"]=normalizaNombre($arra["nombre"]." ".$arra["apellido"]);
@@ -524,9 +524,9 @@ function clasificacion($tipo="completa") {
 
 
             if (!$stringGoleador[$porrista["id_goleador"]]) {
-            $query="SELECT j.nombre nombrej,e.nombre nombree,e.bandera,count(g.id) goles FROM equipo e,jugador j LEFT JOIN goles g ON g.id_goleador=j.id WHERE j.id_equipo=e.id AND j.id='".$porrista["id_goleador"]."' GROUP BY j.id";
-   			$res=mysql_query($query,$conexion);
-       		$arra=mysql_fetch_array($res);
+                $query="SELECT j.nombre nombrej,e.nombre nombree,e.bandera,count(g.id) goles FROM equipo e,jugador j LEFT JOIN goles g ON g.id_goleador=j.id WHERE j.id_equipo=e.id AND j.id='".$porrista["id_goleador"]."' GROUP BY j.id";
+                $res=bd_getAll($query,$conexion);
+                $arra=bd_fetch($res);
                 for ($i=1; $i<=$arra["goles"]; $i++) $stringGoleador[$porrista["id_goleador"]].="&nbsp;<img src='".WEB_ROOT."/images/balon.gif' width=10 height=10>";
                 $stringGoleador[$porrista["id_goleador"]].="&nbsp;<img src='".WEB_ROOT."/images/badges/".$arra["bandera"]."' width=10 height=10> <span class='little'>".$arra["nombrej"]." (".$arra["nombree"].", ".$arra["goles"].")</span>";
             }
@@ -560,8 +560,8 @@ function clasificacion($tipo="completa") {
                         }
                         if ($porrista["id_arbitro"]>0 && date("Y-m-d H:i:s")<$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE) {
                             $query="SELECT COUNT( * ) FROM partido p, apuesta a WHERE a.id_partido = p.id AND p.fase >1 AND a.id_equipo1 >0 AND a.id_equipo2 >0 AND a.id_porrista =".$porrista["id"];
-                            $resComprobacion=mysql_query($query,$conexion);
-                            $partidosSegundaFase=mysql_fetch_array($resComprobacion);
+                            $resComprobacion=bd_getAll($query,$conexion);
+                            $partidosSegundaFase=bd_fetch($resComprobacion);
                             $partidosSegundaFase=$partidosSegundaFase[0];
                             if ($partidosSegundaFase==$PARTIDOS_SEGUNDA_FASE) $segundaFaseOK="<span class='green'>2 Fase OK</span>";
                             else $segundaFaseOK="<span class='black'>Problema rellenando segunda fase</span>";

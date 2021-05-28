@@ -1,10 +1,16 @@
 <?php
 $query="SELECT * FROM noticias WHERE activa='si' ORDER BY fecha DESC";
-$res=mysql_query($query,$conexion);
-while ($arra=mysql_fetch_array($res)) {
+$res=bd_getAll($query,$conexion);
+while ($arra=bd_fetch($res)) {
 	echo "<h1 class='red'>".$arra["titular"]."</h1>";
 	echo "<p>".$arra["cuerpo"]."</p>";
 }
+
+$query="SELECT id,nombre,bandera FROM equipo";
+$res=bd_getAll($query,$conexion);
+while ($arra=bd_fetch($res))
+ echo "<img src='".WEB_ROOT."/images/badges/".$arra["bandera"]."' width=20 height=20> <span style='position:relative;top:-3px'>".$arra["id"]." ".$arra["nombre"]."</span><br>";
+
 ?>
 <h1 class='red'>BIENVENIDO</h1>
 <p>
@@ -28,4 +34,4 @@ La Porra consta de dos fases, que se detallan m&aacute;s ampliamente en las <a h
 Gracias por visitarnos y <a href='apuesta.php'>&iexcl;Rellena tu apuesta!</a><br><br>&nbsp;
 </p>
 
-<? include "mapa.php" ?>
+<?php include "mapa.php" ?>

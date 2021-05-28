@@ -1,4 +1,4 @@
-<? include "inc/inc.php";
+<?php include "inc/inc.php";
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
 Created by: Reality Software | www.realitysoftware.ca
@@ -27,7 +27,7 @@ You can also purchase a PSD-file for this template.
               <li><a href="bases_enroporra_mundial_2010.pdf" target='_blank'>Bases</a></li>
               <li><a href="cuenta.php">Mi cuenta</a></li>
               <li><a href="clasificacion.php">Clasificación</a></li>
-              <li><a href='mailto:porramundialenro@gmail.com'>Contacto</a></li>
+              <li><a href='mailto:<?php echo $EMAIL_ADMIN ?>'>Contacto</a></li>
           </ul>
       </div>
   </div>
@@ -39,10 +39,10 @@ You can also purchase a PSD-file for this template.
 			if ($_GET["test"]==1) {
 				echo "<h1 class='red'>Próximos partidos</h1> ";
 				$query="SELECT id FROM partido WHERE ((fecha='".date("Y-m-d")."' AND hora>'".date("H:i:s")."') OR fecha>'".date("Y-m-d")."') ORDER BY fecha, hora LIMIT 50";
-				$res=mysql_query($query,$conexion);
+				$res=bd_getAll($query,$conexion);
 				echo "<table><tr>";
 				$i=0;
-				while($arra=mysql_fetch_array($res)) {
+				while($arra=bd_fetch($res)) {
 					$i++;
 					echo"<td>".partido($arra["id"])."</td>";
 					if ($i%3==0) echo"</tr><tr>";

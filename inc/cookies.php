@@ -2,8 +2,8 @@
 
 if ($_POST["accion"]=="registrarnick") {
 	$query="SELECT id FROM porrista WHERE nick='".str_replace("'","",$_POST["nick"])."' AND pagado='si'";
-	$res=mysql_query($query,$conexion);
-	$arra=mysql_fetch_array($res);
+	$res=bd_getAll($query,$conexion);
+	$arra=bd_fetch($res);
 	$nickARegistrar=$arra["id"];
 	if ($nickARegistrar) {
 		setcookie("nickRegistrado",$_POST["nick"],time()+60*60*24*30);

@@ -1,5 +1,4 @@
-<? include "inc/inc.php";
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php include "inc/inc.php"; ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
 Created by: Reality Software | www.realitysoftware.ca
 Released by: Flash MP3 Player | www.flashmp3player.org
@@ -64,10 +63,10 @@ You can also purchase a PSD-file for this template.
 						
 						$query="SELECT id FROM partido WHERE ((fecha='".date("Y-m-d")."' AND hora>='".$horaHoy."') OR fecha>'".date("Y-m-d")."') AND fase!=6 ORDER BY fecha, hora LIMIT 3";
 						//if ($_GET["test"]==1) echo $query."<br>";
-						$res=mysql_query($query,$conexion);
+						$res=bd_getAll($query,$conexion);
 						echo "<div style='margin:auto'><table><tr>";
 						$contador=0;
-						while($arra=mysql_fetch_array($res)) {
+						while($arra=bd_fetch($res)) {
 							echo"<td valign='top'>".partido($arra["id"])."</td>";
 							echo"<td width=40></td>";
 							$contador++;
@@ -82,10 +81,10 @@ You can also purchase a PSD-file for this template.
 
 							$query="SELECT id FROM partido WHERE resultado1>=0 AND resultado2>=0 ORDER BY fecha DESC, hora DESC LIMIT 3";
 							//if ($_GET["test"]==1) echo $query."<br>";
-							$res=mysql_query($query,$conexion);
+							$res=bd_getAll($query,$conexion);
 							echo "<div style='margin:auto'><table><tr>";
 							$contador=0;
-							while($arra=mysql_fetch_array($res)) {
+							while($arra=bd_fetch($res)) {
 								echo"<td valign='top'>".partido_jugado($arra["id"])."</td>";
 								$contador++;
 								//if ($contador==2) echo "</tr><tr>";
@@ -104,7 +103,7 @@ You can also purchase a PSD-file for this template.
 
 echo "<br><br>"; //Son las <b>".date("H:i")."</b><br><br>";
 ?>
-            <div id="content-left" <? if ($cuenta==1||$clasificacion==1||$clasificacion_1==1||$amigos==1||$apuesta2==1) echo 'style="width:100% !important"'; ?>>
+            <div id="content-left" <?php if ($cuenta==1||$clasificacion==1||$clasificacion_1==1||$amigos==1||$apuesta2==1) echo 'style="width:100% !important"'; ?>>
 <?php
 
 					if ($apuesta==1) include "templates/apuesta.php";
@@ -118,13 +117,13 @@ echo "<br><br>"; //Son las <b>".date("H:i")."</b><br><br>";
 
 			?>
             </div>
-            <?                  } // END else la conexion a BD funciona correctamente
+            <?php                 } // END else la conexion a BD funciona correctamente
 
             if ($apuesta==1 || $home==1) { ?>
             <div id="content-right">
-                <? include "templates/twitter.html"; ?>
+                <?php include "templates/twitter.html"; ?>
             </div>
-            <? } ?>
+            <?php } ?>
             <div style='clear:both'></div>
         </div>
     </div>

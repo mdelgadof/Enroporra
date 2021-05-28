@@ -3,9 +3,9 @@
 <?php
 
 $query="SELECT pagado,count(*) s FROM porrista GROUP BY pagado";
-$res=mysql_query($query,$conexion);
+$res=bd_getAll($query,$conexion);
 $pagados=$nopagados=0;
-while ($arra=mysql_fetch_array($res)) {
+while ($arra=bd_fetch($res)) {
 	if ($arra["pagado"]=="si") $pagados=$arra["s"];
 	if ($arra["pagado"]=="no") $nopagados=$arra["s"];
 }
@@ -14,10 +14,10 @@ $porristas=$pagados+$nopagados;
 echo "<h1 class='red'>JUGADORES: $porristas</h1> (pagados <span class='red'>$pagados</span>, por pagar <span class='red'>$nopagados</span>)<p></p>";
 
 $query="SELECT p.id,p.nombre,p.apellido,p.nick,p.pagado,p.forma_pago,p.comisionero,p.telefono,p.email FROM porrista p ORDER BY p.pagado DESC,p.id DESC";
-$res=mysql_query($query,$conexion);
+$res=bd_getAll($query,$conexion);
 
 echo "<table>";
-while ($arra=mysql_fetch_array($res)) {
+while ($arra=bd_fetch($res)) {
 	$checked = ($arra["pagado"]=="si") ? "checked":"";
 	$telefono=$email="";
 	if ($arra["telefono"]) $telefono="Tel: ".$arra["telefono"]." / ";

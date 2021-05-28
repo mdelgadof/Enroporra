@@ -22,8 +22,8 @@ function clasificacion($tipo="completa") {
 	}
 
 	$query="SELECT count(*) c FROM partido WHERE fecha<='".date("Y-m-d")."' AND resultado1>=0";
-	$res=mysql_query($query,$conexion);
-	$arra=mysql_fetch_array($res);
+	$res=bd_getAll($query,$conexion);
+	$arra=bd_fetch($res);
 	$partidos=$arra["c"];
 
 	if ($partidos) {
@@ -32,17 +32,17 @@ function clasificacion($tipo="completa") {
 		$devuelve.= "Clasificación $cabecera a d�a de hoy (<span class='red'><b>$partidos</b></span> partidos disputados y apuntados) :<br><br>";
 
 		$query="SELECT id FROM partido WHERE resultado1<0 ORDER BY fecha,hora LIMIT 4";
-		$res=mysql_query($query,$conexion);
+		$res=bd_getAll($query,$conexion);
 		$proximosPartidos=array();
-		while ($arra=mysql_fetch_array($res)) {
+		while ($arra=bd_fetch($res)) {
 			$proximosPartidos[]=$arra["id"];
 		}
 
 		$arrayPorristas=array();
 		$query="SELECT id,nick,nombre,apellido,id_goleador,id_arbitro FROM porrista WHERE pagado='si' ".$condicionQuery;
-		$res=mysql_query($query,$conexion);
+		$res=bd_getAll($query,$conexion);
 		$i=0;
-		while ($arra=mysql_fetch_array($res)) {
+		while ($arra=bd_fetch($res)) {
 			$arrayPorristas[$i]["nick"]=$arra["nick"];
 			$arrayPorristas[$i]["id"]=$arra["id"];
 			$arrayPorristas[$i]["nombre"]=normalizaNombre($arra["nombre"]." ".$arra["apellido"]);
@@ -70,8 +70,8 @@ function clasificacion($tipo="completa") {
 			else $head1=$head2="";
 
 			/*$query="SELECT count(*) FROM goles WHERE id_goleador='".$porrista["id_goleador"]."'";
-			$res=mysql_query($query,$conexion);
-			$arra=mysql_fetch_array($res);
+			$res=bd_getAll($query,$conexion);
+			$arra=bd_fetch($res);
 			$goles=$arra[0]; $golesString="";
 			for ($i=1; $i<=$goles; $i++) $golesString.="<img src='".WEB_ROOT."/images/balon.png' width=10 height=10>&nbsp;";*/
 

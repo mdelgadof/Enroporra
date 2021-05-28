@@ -2,7 +2,7 @@
 	if ($_GET["accion"]=="eliminar_gol") {
 		$id_gol=intval($_GET["id"]);
 		$query="DELETE FROM goles WHERE id='$id_gol'";
-		$res=mysql_query($query,$conexion);
+		$res=bd_getAll($query,$conexion);
 		echo "<script>location.href='partidos.php?t=".time()."'</script>";
 		exit();
 	}
@@ -24,16 +24,16 @@
 			if (substr($clave,0,9)=="goleador_" && $valor) {
 				$temp=explode("_",$clave);
 				$query="INSERT INTO goles SET id_goleador='".$valor."',id_partido='".$temp[1]."'";
-				$res=mysql_query($query,$conexion);
+				$res=bd_getAll($query,$conexion);
 			}
 			// Incluso si son nuevos
 			if (substr($clave,0,14)=="nuevogoleador_" && $valor) {
 				$temp=explode("_",$clave);
 				$query="INSERT INTO jugador SET nombre='".str_replace("'","",$valor)."', id_equipo='".$temp[1]."'";
-				$res=mysql_query($query,$conexion);
-				$id_jugador=mysql_insert_id();
+				$res=bd_getAll($query,$conexion);
+				$id_jugador=bd_insert();
 				$query="INSERT INTO goles SET id_goleador='".$id_jugador."',id_partido='".$temp[2]."'";
-				$res=mysql_query($query,$conexion);
+				$res=bd_getAll($query,$conexion);
 			}
 		}
 
@@ -48,7 +48,7 @@
 			}
 
 			$query="UPDATE partido SET resultado1='".$resultado[1]."',resultado2='".$resultado[2]."',quiniela='".$quiniela."' WHERE id='".$partido."'";
-			$res=mysql_query($query,$conexion);
+			$res=bd_getAll($query,$conexion);
 		}
 
 		echo "<h1 class='red'>Inserción correcta</h1><p>OK, se han insertado los resultados y goleadores que has colocado. Más abajo puedes ver cómo queda el calendario real</p>";
@@ -69,12 +69,12 @@
         $query="SELECT p.*,e1.nombre nombre1,e1.bandera bandera1,e2.nombre nombre2,e2.bandera bandera2 FROM partido p,equipo e1,equipo e2 WHERE p.id_equipo1=e1.id AND p.id_equipo2=e2.id AND fecha<='".date("Y-m-d")."' AND ".$faseQ." ORDER BY fecha DESC, hora DESC";
 	/*echo $query;
 	exit();*/
-	$res=mysql_query($query,$conexion);
-	$num=mysql_num_rows($res);
+	$res=bd_getAll($query,$conexion);
+	$num=bd_num($res);
 	if (!$num) echo "Todavía no ha empezado $NOMBRE_TORNEO, no se pueden poner los resultados de los partidos :)<br><br>";
 
 	echo "<table>";
-	while ($arra=mysql_fetch_array($res)) {
+	while ($arra=bd_fetch($res)) {
 
 		$valor1= ($arra["resultado1"]>=0 && $arra["resultado1"]!="") ? $arra["resultado1"]:"";
 		$valor2= ($arra["resultado2"]>=0 && $arra["resultado2"]!="") ? $arra["resultado2"]:"";
@@ -96,9 +96,9 @@
 		}
 
 		$query="SELECT g.id,j.nombre,e.nombre as pais FROM goles g,jugador j,equipo e WHERE g.id_goleador=j.id AND e.id=j.id_equipo AND g.id_partido='".$arra["id"]."' ORDER BY pais";
-		$res2=mysql_query($query,$conexion);
+		$res2=bd_getAll($query,$conexion);
 		echo "<tr><td colspan='4'><span class='red'>GOLES:</span> ";
-		while ($arra2=mysql_fetch_array($res2)) {
+		while ($arra2=bd_fetch($res2)) {
 			echo $arra2["nombre"]." (".$arra2["pais"].") <a href='partidos.php?accion=eliminar_gol&id=".$arra2["id"]."'>(eliminar)</a> / ";
 		}
 		echo "</td></tr>";

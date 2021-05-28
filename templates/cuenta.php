@@ -5,9 +5,9 @@
         if ($nick) {
             $nick=trim(str_replace("'","",$nick));
             $query="SELECT pagado,id,nombre,apellido FROM porrista WHERE nick='$nick'";
-            $res=mysql_query($query,$conexion);
-            $num=mysql_num_rows($res);
-            $arra=mysql_fetch_array($res);
+            $res=bd_getAll($query,$conexion);
+            $num=bd_num($res);
+            $arra=bd_fetch($res);
         }
 
 if ($_GET["accion"]=="ver") {
@@ -19,7 +19,7 @@ if ($_GET["accion"]=="ver") {
 		else {
 			echo "<h1 class='red'>Apuesta de ".$arra["nombre"]." ".$arra["apellido"]."</h1><br><br>";
                         if (date("Y-m-d H:i:s")<=$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE && date("Y-m-d H:i:s")>=$FECHA_APERTURA_PORRA_SEGUNDA_FASE) 
-				echo "Para que nadie juegue con ventaja, no se publicarán las apuestas de la segunda fase hasta que empiecen las eliminatorias.";
+				echo "Para que nadie juegue con ventaja, no se publicarï¿½n las apuestas de la segunda fase hasta que empiecen las eliminatorias.";
 			else {
 				echo "<h1>Segunda fase</h1><br>";
 				echo porra($arra["id"],2);

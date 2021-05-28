@@ -8,12 +8,12 @@
 
 		// Validación de porrista
 		$query="SELECT id FROM porrista WHERE nick='".$nick."' AND id='".$id."'";
-		$res=mysql_query($query,$conexion);
-		if (!mysql_num_rows($res) || $nick=="") {
+		$res=bd_getAll($query,$conexion);
+		if (!bd_num($res) || $nick=="") {
 			$ko=true;
 			$query="SELECT telefono,email,id FROM porrista WHERE nick='".$nick."'";
-			$res=mysql_query($query,$conexion);
-			$arra=mysql_fetch_array($res);
+			$res=bd_getAll($query,$conexion);
+			$arra=bd_fetch($res);
 			if ($telefono==$arra["telefono"] && $telefono!="") $ko=false;
 			else if ($email==$arra["email"] && $email!="") $ko=false;
 			if ($ko) {
@@ -26,8 +26,8 @@
 		
 		// Segunda comprobación
 		$query="SELECT id FROM apuesta WHERE id_partido=49 AND id_porrista='".$id_porrista."'";
-		$res=mysql_query($query,$conexion);
-		if (mysql_num_rows($res)) {
+		$res=bd_getAll($query,$conexion);
+		if (bd_num($res)) {
 				echo "<h1 class='red'>Error</h1><p>Hemos detectado que ya existe una apuesta previa para el nick ".strtoupper($nick)." en <b>Enroporra Mundial 2010</b>. Hemos guardado esta apuesta, pero hasta que la comisión verifique la válida, mostramos la primera. Por favor, envíanos un email a <a href='mailto:porramundialenro@gmail.com'>porramundialenro@gmail.com</a></p>";
 				$duplicada=true;
 				$id_porrista*=-1;
@@ -59,10 +59,10 @@
 			else $quiniela=$_POST["q_".$partido];
 
 			$query="INSERT INTO apuesta SET id_porrista='".$id_porrista."',id_partido='".$partido."',resultado1='".$datos["r"][1]."',resultado2='".$datos["r"][2]."',id_equipo1='".$id_equipo1."',id_equipo2='".$id_equipo2."',quiniela='".$quiniela."'";
-			$res=mysql_query($query,$conexion);
+			$res=bd_getAll($query,$conexion);
 		}
 		$query="UPDATE porrista SET id_arbitro='".intval($_POST["arbitro"])."' WHERE id='".$id_porrista."'";
-		$res=mysql_query($query,$conexion);
+		$res=bd_getAll($query,$conexion);
 		
 		if ($duplicada) {
 			echo "<p>Esta es la primera apuesta de <span class='red'>".strtoupper($nick)."</span> que figura en nuestra base de datos:</p>";
@@ -90,8 +90,8 @@ EOT;
 		
 		global $conexion,$arrayEliminatorias;
 		$query="SELECT p.*,e1.nombre equipo1,e2.nombre equipo2,e1.bandera bandera1,e2.bandera bandera2 FROM partido p LEFT JOIN equipo e1 ON e1.id=p.id_equipo1 LEFT JOIN equipo e2 ON e2.id=p.id_equipo2 WHERE p.id='".$id_partido."'";
-		$res=mysql_query($query,$conexion);
-		$arra=mysql_fetch_array($res);
+		$res=bd_getAll($query,$conexion);
+		$arra=bd_fetch($res);
 		
 		$rotulo=array("","","OCTAVOS","CUARTOS","SEMIS","FINAL");
 		
@@ -134,8 +134,8 @@ EOT;
 	}
 	
 	$query="SELECT * FROM arbitro ORDER BY nombre";
-	$res=mysql_query($query,$conexion);
-	while ($arra=mysql_fetch_array($res)) {
+	$res=bd_getAll($query,$conexion);
+	while ($arra=bd_fetch($res)) {
 		$optionsArbitros.="<option value='".$arra["id"]."'>".$arra["nombre"]."</option>";
 	}
 	

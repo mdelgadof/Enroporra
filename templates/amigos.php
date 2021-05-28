@@ -18,11 +18,11 @@ else {
 }
 
 $query="SELECT * FROM porrista WHERE pagado='si' ORDER BY nombre,apellido";
-$res=mysql_query($query,$conexion);
-$num=mysql_num_rows($res);
+$res=bd_getAll($query,$conexion);
+$num=bd_num($res);
 
 echo "<table>";
-while ($arra=mysql_fetch_array($res)) {
+while ($arra=bd_fetch($res)) {
 	$checked = in_array($arra["nick"],$arrayAmigos) ? "checked":"";
 	echo "<tr><td><input type='checkbox' value='".$arra["nick"]."' onClick='amigar(this)' ".$checked."> ".normalizaNombre($arra["nombre"]." ".$arra["apellido"])."&nbsp;&nbsp;&nbsp;</td>
 	<td><div id='".$arra["nick"]."'></div></td></tr>";
