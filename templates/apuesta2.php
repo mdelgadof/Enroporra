@@ -106,7 +106,7 @@ EOT;
 
 		$rotulo=array("","","OCTAVOS","CUARTOS","SEMIS","","FINAL");
 
-		if ($arra["id_equipo1"]==0) {
+		if ($arra["id_equipo1"]<=0) {
 			$nombre1="???";
 			$bandera1=WEB_ROOT."/images/ask.jpg";
 		}
@@ -114,7 +114,7 @@ EOT;
 			$nombre1=strtoupper(substr($arra["equipo1"],0,3));
 			$bandera1=WEB_ROOT."/images/badges/".$arra["bandera1"];
 		}
-		if ($arra["id_equipo2"]==0) {
+		if ($arra["id_equipo2"]<=0) {
 			$nombre2="???";
 			$bandera2=WEB_ROOT."/images/ask.jpg";
 		}

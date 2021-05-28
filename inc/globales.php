@@ -10,6 +10,7 @@ $CUENTA_BANCO = "ES43 0182 4028 7602 0156 3306";
 $TITULAR_BANCO = "Federico de la Torriente Guti&eacute;rrez";
 $BIZUM = "649927465";
 $EMAIL_ADMIN = "comisionporra@gmail.com";
+$FRASE_ADMIN = "Esto es una frase como otra cualquiera para generar un hash para logarse en admin";
 $PRIMER_PARTIDO_SEGUNDA_FASE = 437;
 $PARTIDOS_SEGUNDA_FASE=15;
 $FECHA_PRIMER_PARTIDO="2021-06-11 21:00:00";

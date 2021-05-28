@@ -93,9 +93,9 @@ EOT;
 		$res=bd_getAll($query,$conexion);
 		$arra=bd_fetch($res);
 		
-		$rotulo=array("","","OCTAVOS","CUARTOS","SEMIS","FINAL");
+		$rotulo=array("","","OCTAVOS","CUARTOS","SEMIS","","FINAL");
 		
-		if ($arra["id_equipo1"]==0) {
+		if ($arra["id_equipo1"]<=0) {
 			$nombre1="???";
 			$bandera1=WEB_ROOT."/images/ask.jpg";
 		}
@@ -103,7 +103,7 @@ EOT;
 			$nombre1=strtoupper(substr($arra["equipo1"],0,3));
 			$bandera1=WEB_ROOT."/images/badges/".$arra["bandera1"];
 		}
-		if ($arra["id_equipo2"]==0) {
+		if ($arra["id_equipo2"]<=0) {
 			$nombre2="???";
 			$bandera2=WEB_ROOT."/images/ask.jpg";
 		}
@@ -152,25 +152,40 @@ EOT;
 					Introduce tu <b>teléfono</b> (si lo pusiste): <input type='text' class='inputArea' style='width:300px;' name='telefono'><br>
 					Rellena tu <b>apuesta</b>. Si marcas empate te preguntaremos quién pasa por penaltis. En estos casos los puntos por acertar el resultado sólo se dan si el ganador es el que tú dices.
 				</td>
-			</tr>
-			<tr>
-				<td valign='top'>".fichaEliminatoria(49)."</td><td valign='top'>".fichaEliminatoria(50)."</td><td valign='top'>".fichaEliminatoria(51)."</td><td valign='top'>".fichaEliminatoria(52)."</td>
-			</tr>
-			<tr>
-				<td valign='top'>".fichaEliminatoria(53)."</td><td valign='top'>".fichaEliminatoria(54)."</td><td valign='top'>".fichaEliminatoria(55)."</td><td valign='top'>".fichaEliminatoria(56)."</td>
-			</tr>
-			<tr><td height=20></td></tr>
-			<tr>
-				<td valign='top'>".fichaEliminatoria(57)."</td><td valign='top'>".fichaEliminatoria(58)."</td><td valign='top'>".fichaEliminatoria(59)."</td><td valign='top'>".fichaEliminatoria(60)."</td>
-			</tr>
-			<tr><td height=20></td></tr>
-			<tr>
-				<td></td><td valign='top'>".fichaEliminatoria(61)."</td><td valign='top'>".fichaEliminatoria(62)."</td><td></td>
-			</tr>
-			<tr><td height=20></td></tr>
-			<tr>
-				<td colspan='4' align='center' valign='top'>".fichaEliminatoria(64)."</td>
-			</tr>
+			</tr>";
+
+        $query="SELECT id,fase FROM partido WHERE fase>1 ORDER BY id";
+        $res=bd_getAll($query,$conexion);
+
+        $fase=0;
+
+        while ($arra=bd_fetch($res)) {
+            if ($fase==0) {
+                echo "<tr>";
+                $fase=$arra["fase"];
+                $partido=0;
+            }
+            if ($fase!=$arra["fase"]) {
+                $fase=$arra["fase"];
+                $partido=0;
+                echo "<td height=20></td></tr><tr>";
+            }
+            $partido++;
+
+            if ($fase==4&&$partido==1) echo "<td></td>";
+            $tdfinal = ($fase==6) ? "colspan='4' align='center'":"";
+
+            echo "<td ".$tdfinal." valign='top'>".fichaEliminatoria($arra["id"])."</td>";
+
+            if ($fase==4&&$partido==2) echo "<td></td>";
+
+            if ($partido==4||($fase==4&&$partido==2)||$fase==6) {
+                echo "</tr><tr>";
+                $partido=0;
+            }
+        }
+
+        echo "
 			<tr><td height=20></td></tr>
 			<tr>
 				<td colspan='4' align='center' valign='top'>El árbitro de la final:<br><select id='arbitro' name='arbitro'><option value=''>Elige a tu árbitro para la final...</option>".$optionsArbitros."</select></td>
@@ -237,23 +252,16 @@ EOT;
 		winner = 0;
 
 		var arrayEliminatorias = new Array(62);
-		
-		arrayEliminatorias[49] = "58_1";
-		arrayEliminatorias[50] = "58_2";
-		arrayEliminatorias[51] = "59_2";
-		arrayEliminatorias[52] = "59_1";
-		arrayEliminatorias[53] = "57_1";
-		arrayEliminatorias[54] = "57_2";
-		arrayEliminatorias[55] = "60_1";
-		arrayEliminatorias[56] = "60_2";
 
-		arrayEliminatorias[57] = "61_2";
-		arrayEliminatorias[58] = "61_1";
-		arrayEliminatorias[59] = "62_1";
-		arrayEliminatorias[60] = "62_2";
-
-		arrayEliminatorias[61] = "64_1";
-		arrayEliminatorias[62] = "64_2";
+        <?php
+            $query="SELECT id,vencedor_eliminatoria FROM partido WHERE vencedor_eliminatoria!='' ORDER BY id";
+            $res=bd_getAll($query,$conexion);
+            while ($arra=bd_fetch($res)) {
+            ?>
+        arrayEliminatorias[<?php echo $arra["id"] ?>] = "<?php echo $arra["vencedor_eliminatoria"] ?>";
+        <?php
+            }
+        ?>
 
 		resultado1=$("#r_"+partido+"_1").val();
 		resultado2=$("#r_"+partido+"_2").val();

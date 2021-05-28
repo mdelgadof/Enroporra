@@ -1,4 +1,9 @@
-<?php include "../inc/inc.php"; ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php include "../inc/inc.php";
+
+if ($_POST["login"]=="comision" && $_POST["password"]="pastrana10.") {
+    setcookie("log",md5($FRASE_ADMIN));
+}
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
 Created by: Reality Software | www.realitysoftware.ca
 Released by: Flash MP3 Player | www.flashmp3player.org
@@ -16,6 +21,17 @@ You can also purchase a PSD-file for this template.
 </head>
 <body>
 <div id="container">
+    <?php if ($_COOKIE["log"]!=md5($FRASE_ADMIN)) { ?>
+        <div id="main">
+            <div id="content">
+                <form method="post">
+                    User: <input type="text" name="login" /><br>
+                    Pass: <input type="password" name="password" />
+                    <input type="submit" value="Enviar" />
+                </form>
+            </div>
+        </div>
+    <?php } else { ?>
 	<!-- header -->
     <div id="header">
     	<div id="logo"><a href="/">&nbsp;</a></div>
@@ -58,5 +74,7 @@ You can also purchase a PSD-file for this template.
     </div>
     <!-- end footer -->
 </div>
-<div style="text-align: center; font-size: 0.75em;">Design downloaded from <a href="http://www.freewebtemplates.com/">free website templates</a>.</div></body>
+<div style="text-align: center; font-size: 0.75em;">Design downloaded from <a href="http://www.freewebtemplates.com/">free website templates</a>.</div>
+<?php } ?>
+</body>
 </html>
