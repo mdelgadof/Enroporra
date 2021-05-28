@@ -6,11 +6,6 @@ while ($arra=bd_fetch($res)) {
 	echo "<p>".$arra["cuerpo"]."</p>";
 }
 
-$query="SELECT id,nombre,bandera FROM equipo";
-$res=bd_getAll($query,$conexion);
-while ($arra=bd_fetch($res))
- echo "<img src='".WEB_ROOT."/images/badges/".$arra["bandera"]."' width=20 height=20> <span style='position:relative;top:-3px'>".$arra["id"]." ".$arra["nombre"]."</span><br>";
-
 ?>
 <h1 class='red'>BIENVENIDO</h1>
 <p>
