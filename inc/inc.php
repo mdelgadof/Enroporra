@@ -1,12 +1,22 @@
 <?php
 if ($_SERVER["SERVER_NAME"]=="enroporra.test") {
-	define ("DOCUMENT_ROOT","C:/Users/Miguel/ClientesCodigo/Miguel/Enroporra");
+    define('DB_HOST',"localhost");
+    define('DB_NAME',"enroporra");
+    define('DB_USER',"root");
+    define('DB_PASSWORD',"");
+
+    define ("DOCUMENT_ROOT","C:/Users/Miguel/ClientesCodigo/Miguel/Enroporra");
 	define ("WEB_ROOT","http://enroporra.test/");
 	$pruebasLocal=true;
 }
 else {
-	define ("DOCUMENT_ROOT","/var/www/www.enroporra.com/");
-	define ("WEB_ROOT","http://www.enroporra.com");
+    define('DB_HOST',"localhost");
+    define('DB_NAME',"enroporra");
+    define('DB_USER',"enroporra");
+    define('DB_PASSWORD',"enroporra");
+
+    define ("DOCUMENT_ROOT","/var/www/www.enroporra.es/");
+	define ("WEB_ROOT","http://www.enroporra.es");
 	$pruebasLocal=false;
 }
 include DOCUMENT_ROOT."/inc/bd.php";

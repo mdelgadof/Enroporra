@@ -1,10 +1,5 @@
 <?php
 
-	define('DB_HOST',"localhost");
-	define('DB_NAME',"enroporra");
-	define('DB_USER',"root");
-	define('DB_PASSWORD',"");
-
     $conexion=mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD);
     mysqli_query($conexion,"SET NAMES 'utf8'");
     mysqli_query($conexion,"USE ".DB_NAME);
