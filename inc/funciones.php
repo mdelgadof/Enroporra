@@ -591,7 +591,7 @@ function clasificacion($tipo="completa") {
 
 	$WEB_ROOT=WEB_ROOT;
 	$devuelve.= <<< EOT
-		<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js'></script>
+		<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js'></script>
 		<script type='text/javascript'>
 		function verDetalle(nombre) {
 			$("#detalle_"+nombre).show();

@@ -137,7 +137,7 @@
 <a target='_blank' href='http://maps.google.es/maps/place?cid=3875553414921857654&q=Enro&hl=es&cd=1&ei=yk0GTNzaJ5bUjAfPprHLCA&dtab=0&sll=40.468008,-3.677945&sspn=0.006295,0.006295&ie=UTF8&ll=40.469523,-3.680093&spn=0,0&t=h&z=18&iwloc=lyrftr:h,3875553414921857654,40.467964,-3.677995'>Haz click Aquí para ver cómo llegar</a>
 </p>
 
-<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js'></script>
+<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js'></script>
 <script type='text/javascript'>
 
 	function validaform() {
