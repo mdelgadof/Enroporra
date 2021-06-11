@@ -71,7 +71,8 @@ CREATE TABLE `equipo` (
 
 CREATE TABLE `goles` (
   `id` int(11) NOT NULL,
-  `id_goleador` int(11) NOT NULL
+  `id_goleador` int(11) NOT NULL,
+  `id_partido` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
