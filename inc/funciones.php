@@ -488,7 +488,7 @@ function clasificacion($tipo="completa") {
 		}
 
 		$arrayPorristas=array();
-		$query="SELECT id,nick,nombre,apellido,id_goleador,id_arbitro FROM porrista WHERE pagado='si' ".$condicionQuery;
+		$query="SELECT id,nick,nombre,apellido,id_goleador,id_arbitro FROM porrista WHERE pagado='si' ".$condicionQuery." ORDER BY id";
 		$res=bd_getAll($query,$conexion);
 		$i=0;
 		while ($arra=bd_fetch($res)) {
@@ -497,8 +497,8 @@ function clasificacion($tipo="completa") {
 			$arrayPorristas[$i]["nombre"]=normalizaNombre($arra["nombre"]." ".$arra["apellido"]);
 			$arrayPorristas[$i]["id_goleador"]=$arra["id_goleador"];
 			$arrayPorristas[$i]["id_arbitro"]=$arra["id_arbitro"];
-			if (in_array($arrayPorristas[$i]["nombre"],$nombresExistentes)) $arrayPorristas[$i]["nombre"].=" (2)";
-			else $nombresExistentes[]=$arrayPorristas[$i]["nombre"];
+			if (isset($nombresExistentes[$arrayPorristas[$i]["nombre"]])) { $nombresExistentes[$arrayPorristas[$i]["nombre"]]++; $arrayPorristas[$i]["nombre"].=" (".$nombresExistentes[$arrayPorristas[$i]["nombre"]].")"; }
+			else $nombresExistentes[$arrayPorristas[$i]["nombre"]]=1;
 			list($arrayPorristas[$i]["puntos"],$arrayPorristas[$i]["partidos"],$arrayPorristas[$i]["resultados"],$arrayPorristas[$i]["string"])=puntos($arra["id"]);
 			$i++;
 		}
