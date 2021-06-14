@@ -453,8 +453,10 @@ function clasificacion($tipo="completa") {
 	global $conexion,$_COOKIE,$nickRegistrado,$NOMBRE_TORNEO,$PARTIDOS_SEGUNDA_FASE,$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE;
 
 	date_default_timezone_set("Europe/Madrid");
+    $devuelve="";
 
 	if ($tipo=="completa") {
+        if (file_exists(FULL_TABLE_HTML)) return file_get_contents(FULL_TABLE_HTML);
 		$cabecera="<span class='red'>GENERAL</span>";
 		//$condicionQuery=" AND id NOT IN (141,115,149)";
 		$destacados=5;
@@ -556,7 +558,7 @@ function clasificacion($tipo="completa") {
 			$colorFuturaApuesta = (strtolower($nickRegistrado)==strtolower($porrista["nick"])) ? "bgColor='#FFFF00'":"bgColor='$bgColor'";
                         $stringProximasApuestas = apuestaPartidos($porrista["id"],$proximosPartidos);
                         if (!count($proximosPartidos)) {
-                            if (date("Y-m-d H:i:s")<"2012-06-21 20:30:00") $stringProximasApuestas="&nbsp;Cuando comience la siguiente fase publicaremos todas las apuestas&nbsp;";
+                            if (date("Y-m-d H:i:s")<$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE) $stringProximasApuestas="&nbsp;Cuando comience la siguiente fase publicaremos todas las apuestas&nbsp;";
                         }
                         if ($porrista["id_arbitro"]>0 && date("Y-m-d H:i:s")<$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE) {
                             $query="SELECT COUNT( * ) FROM partido p, apuesta a WHERE a.id_partido = p.id AND p.fase >1 AND a.id_equipo1 >0 AND a.id_equipo2 >0 AND a.id_porrista =".$porrista["id"];
@@ -604,6 +606,10 @@ function clasificacion($tipo="completa") {
 
 		</script>
 EOT;
+
+    $f=fopen(FULL_TABLE_HTML,"w");
+    fwrite($f,$devuelve);
+    fclose($f);
 
 	return $devuelve;
 

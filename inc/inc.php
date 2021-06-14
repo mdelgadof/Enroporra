@@ -19,6 +19,9 @@ else {
 	define ("WEB_ROOT","http://www.enroporra.es");
 	$pruebasLocal=false;
 }
+
+define ("FULL_TABLE_HTML",DOCUMENT_ROOT."templates/clasificacion.html");
+
 include DOCUMENT_ROOT."/inc/bd.php";
 include DOCUMENT_ROOT."/inc/funciones.php";
 include DOCUMENT_ROOT."/inc/cookies.php";

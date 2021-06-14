@@ -53,6 +53,8 @@
 
 		echo "<h1 class='red'>Inserción correcta</h1><p>OK, se han insertado los resultados y goleadores que has colocado. Más abajo puedes ver cómo queda el calendario real</p>";
 
+        unlink(FULL_TABLE_HTML);
+
 	}
 
 ?>

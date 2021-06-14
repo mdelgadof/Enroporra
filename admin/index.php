@@ -2,6 +2,7 @@
 
 if ($_POST["login"]=="comision" && $_POST["password"]="pastrana10.") {
     setcookie("log",md5($FRASE_ADMIN));
+    $_COOKIE["log"]=md5($FRASE_ADMIN);
 }
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
