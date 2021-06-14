@@ -5,7 +5,7 @@ if ($_SERVER["SERVER_NAME"]=="enroporra.test") {
     define('DB_USER',"root");
     define('DB_PASSWORD',"");
 
-    define ("DOCUMENT_ROOT","C:/Users/Miguel/ClientesCodigo/Miguel/Enroporra");
+    define ("DOCUMENT_ROOT","C:/Users/Miguel/ClientesCodigo/Miguel/Enroporra/");
 	define ("WEB_ROOT","http://enroporra.test/");
 	$pruebasLocal=true;
 }

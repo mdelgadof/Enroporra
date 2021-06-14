@@ -465,6 +465,7 @@ function clasificacion($tipo="completa") {
 		$cabecera="<span class='red'>de tu grupo de amigos</span>";
 		$amigosEnro=convierteAmigos($_COOKIE["amigosEnro"]);
 		if ($amigosEnro) {
+            if ($nickRegistrado) $amigosEnro.=",'".str_replace("'","",$nickRegistrado)."'";
 			$condicionQuery=" AND nick IN ($amigosEnro)";
 		}
 		else return $devuelve;
@@ -591,6 +592,20 @@ function clasificacion($tipo="completa") {
                         }*/
 
 	$WEB_ROOT=WEB_ROOT;
+
+    $friendsCondition = ($tipo=="completa") ? <<<EOT
+
+                    if (namevalue[0].toString().trim()=='amigosEnro') {
+                    var friends = namevalue[1].toString().trim().split('%2C');
+                    friends.forEach(function(valor2,indice2,array2) {
+                        if (valor2.toString().trim()!='') {
+                            $('#'+valor2.toString().trim()).css('background-color','#DDAA33');
+                        }
+                    });
+                }
+EOT
+    : "";
+
 	$devuelve.= <<< EOT
 		<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js'></script>
 		<script type='text/javascript'>
@@ -602,7 +617,14 @@ function clasificacion($tipo="completa") {
 			$("#detalle_"+nombre).hide();
 			$("#enlace_"+nombre).html("<a href='javascript:verDetalle(\""+nombre+"\")'><img src='$WEB_ROOT/images/bombilla.jpg' alt='Ver los puntos que lleva "+nombre+"' width=32 height=32></a>");
 		}
-
+		$(document).ready(function() {
+            cookies = document.cookie.split(';');
+            cookies.forEach(function(valor,indice,array) {
+                namevalue = valor.split('=');
+                if (namevalue[0].toString().trim()=='nickRegistrado') $('#'+namevalue[1].toString().trim()).css('background-color','#FFFF00');
+                $friendsCondition
+            });
+        });
 		</script>
 EOT;
 
