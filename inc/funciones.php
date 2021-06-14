@@ -584,12 +584,6 @@ function clasificacion($tipo="completa") {
 	else {
 		$devuelve.= "<p>Todav&iacute;a no ha comenzado ".$NOMBRE_TORNEO." en Enroporra :)</p>";
 	}
-/*    %2CCLEMUS%2CKikogol%2CGaBrI%2Cjoliege%2CFloper%2CGenko%2CMeryta%2C
-			$colorDestacado = (strtolower($nickRegistrado)==strtolower($porrista["nick"])) ? "bgColor='#FFFF00'":"bgColor='$bgColor'";
-                        if (strtolower($nickRegistrado)!=strtolower($porrista["nick"]) && $GLOBALS["amigos"]!=1) {
-                            if (strpos(strtolower($_COOKIE["amigosEnro"]),",".strtolower($porrista["nick"]).",")!==false)
-                                $colorDestacado="bgColor='#DDAA33'";
-                        }*/
 
 	$WEB_ROOT=WEB_ROOT;
 
@@ -599,7 +593,7 @@ function clasificacion($tipo="completa") {
                     var friends = namevalue[1].toString().trim().split('%2C');
                     friends.forEach(function(valor2,indice2,array2) {
                         if (valor2.toString().trim()!='') {
-                            $('#'+valor2.toString().trim()).css('background-color','#DDAA33');
+                            $('#'+valor2.toString().toLowerCase().trim()).css('background-color','#DDAA33');
                         }
                     });
                 }
