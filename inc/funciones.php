@@ -564,7 +564,7 @@ function clasificacion($tipo="completa") {
             }
             else $segundaFaseOK="";
 
-			$devuelve.= "<tr style='background-color:".$bgColor."' id='".str_replace(" ","_",$porrista["nick"])."'><td nowrap>";
+			$devuelve.= "<tr style='background-color:".$bgColor."' id='".str_replace(" ","_",mb_strtolower($porrista["nick"]))."'><td nowrap>";
 			$devuelve.= $head1."&nbsp;<span class='red'><b>".$clasificacionString."</b></span>".$head2."</td><td nowrap>".$head1."&nbsp;".$porrista["nombre"]." [<span class='red'><b>".$porrista["puntos"]."</b></span>]&nbsp;".$head2.$segundaFaseOK.$retorno."<div class='info_porrista'>".$stringGoleador[$porrista["id_goleador"]].$stringPartidosResultados."</div>";
 			$devuelve.= "</td><td width='20'></td><td align='center' bgColor='#FFFFFF' style='padding: 0px 0px 0px 10px;'>";
 			$devuelve.= "<div id='enlace_".$clasificacion."'><a alt='Ver los puntos que lleva ".$porrista["nombre"]."' href='javascript:verDetalle(\"".$clasificacion."\")'><img src='".WEB_ROOT."/images/bombilla.jpg' alt='Ver los puntos que lleva ".$porrista["nombre"]."' width=32 height=32></a></div>";
@@ -621,7 +621,7 @@ EOT
             cookies = document.cookie.split(';');
             cookies.forEach(function(valor,indice,array) {
                 namevalue = valor.split('=');
-                if (namevalue[0].toString().trim()=='nickRegistrado') $('#'+namevalue[1].toString().trim()).css('background-color','#FFFF00');
+                if (namevalue[0].toString().trim()=='nickRegistrado') $('#'+namevalue[1].toString().toLowerCase().trim()).css('background-color','#FFFF00');
                 $friendsCondition
             });
         });
