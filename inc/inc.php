@@ -16,7 +16,7 @@ else {
     define('DB_PASSWORD',"enroporra");
 
     define ("DOCUMENT_ROOT","/var/www/www.enroporra.es/");
-	define ("WEB_ROOT","http://www.enroporra.es");
+	define ("WEB_ROOT","https://www.enroporra.es");
 	$pruebasLocal=false;
 }
 
