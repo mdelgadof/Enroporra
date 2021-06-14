@@ -549,33 +549,26 @@ function clasificacion($tipo="completa") {
 			$clasificacionString = ($puntuacionAnterior==$porrista["puntos"]) ? "":$clasificacion;
 			$puntuacionAnterior=$porrista["puntos"];
 
-			$colorDestacado = (strtolower($nickRegistrado)==strtolower($porrista["nick"])) ? "bgColor='#FFFF00'":"bgColor='$bgColor'";
-                        if (strtolower($nickRegistrado)!=strtolower($porrista["nick"]) && $GLOBALS["amigos"]!=1) {
-                            if (strpos(strtolower($_COOKIE["amigosEnro"]),",".strtolower($porrista["nick"]).",")!==false)
-                                $colorDestacado="bgColor='#DDAA33'";
-                        }
+            $stringProximasApuestas = apuestaPartidos($porrista["id"],$proximosPartidos);
+            if (!count($proximosPartidos)) {
+                if (date("Y-m-d H:i:s")<$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE) $stringProximasApuestas="&nbsp;Cuando comience la siguiente fase publicaremos todas las apuestas&nbsp;";
+            }
+            if ($porrista["id_arbitro"]>0 && date("Y-m-d H:i:s")<$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE) {
+                $query="SELECT COUNT( * ) FROM partido p, apuesta a WHERE a.id_partido = p.id AND p.fase >1 AND a.id_equipo1 >0 AND a.id_equipo2 >0 AND a.id_porrista =".$porrista["id"];
+                $resComprobacion=bd_getAll($query,$conexion);
+                $partidosSegundaFase=bd_fetch($resComprobacion);
+                $partidosSegundaFase=$partidosSegundaFase[0];
+                if ($partidosSegundaFase==$PARTIDOS_SEGUNDA_FASE) $segundaFaseOK="<span class='green'>2 Fase OK</span>";
+                else $segundaFaseOK="<span class='black'>Problema rellenando segunda fase</span>";
+            }
+            else $segundaFaseOK="";
 
-			$colorFuturaApuesta = (strtolower($nickRegistrado)==strtolower($porrista["nick"])) ? "bgColor='#FFFF00'":"bgColor='$bgColor'";
-                        $stringProximasApuestas = apuestaPartidos($porrista["id"],$proximosPartidos);
-                        if (!count($proximosPartidos)) {
-                            if (date("Y-m-d H:i:s")<$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE) $stringProximasApuestas="&nbsp;Cuando comience la siguiente fase publicaremos todas las apuestas&nbsp;";
-                        }
-                        if ($porrista["id_arbitro"]>0 && date("Y-m-d H:i:s")<$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE) {
-                            $query="SELECT COUNT( * ) FROM partido p, apuesta a WHERE a.id_partido = p.id AND p.fase >1 AND a.id_equipo1 >0 AND a.id_equipo2 >0 AND a.id_porrista =".$porrista["id"];
-                            $resComprobacion=bd_getAll($query,$conexion);
-                            $partidosSegundaFase=bd_fetch($resComprobacion);
-                            $partidosSegundaFase=$partidosSegundaFase[0];
-                            if ($partidosSegundaFase==$PARTIDOS_SEGUNDA_FASE) $segundaFaseOK="<span class='green'>2 Fase OK</span>";
-                            else $segundaFaseOK="<span class='black'>Problema rellenando segunda fase</span>";
-                        }
-                        else $segundaFaseOK="";
-
-			$devuelve.= "<tr ".$colorDestacado."><td nowrap>";
+			$devuelve.= "<tr style='background-color:".$bgColor."' id='".str_replace(" ","_",$porrista["nick"])."'><td nowrap>";
 			$devuelve.= $head1."&nbsp;<span class='red'><b>".$clasificacionString."</b></span>".$head2."</td><td nowrap>".$head1."&nbsp;".$porrista["nombre"]." [<span class='red'><b>".$porrista["puntos"]."</b></span>]&nbsp;".$head2.$segundaFaseOK.$retorno."<div class='info_porrista'>".$stringGoleador[$porrista["id_goleador"]].$stringPartidosResultados."</div>";
 			$devuelve.= "</td><td width='20'></td><td align='center' bgColor='#FFFFFF' style='padding: 0px 0px 0px 10px;'>";
 			$devuelve.= "<div id='enlace_".$clasificacion."'><a alt='Ver los puntos que lleva ".$porrista["nombre"]."' href='javascript:verDetalle(\"".$clasificacion."\")'><img src='".WEB_ROOT."/images/bombilla.jpg' alt='Ver los puntos que lleva ".$porrista["nombre"]."' width=32 height=32></a></div>";
 			$devuelve.= "</td><td align='center' bgColor='#FFFFFF'><a href='".WEB_ROOT."/cuenta.php?accion=ver&nick=".$porrista["nick"]."'><img src='".WEB_ROOT."/images/sobre.jpg' alt='Ver la apuesta completa de ".$porrista["nombre"]."' width=32 height=32></a></td>";
-			$devuelve.= "<td ".$colorFuturaApuesta." nowrap>".$stringProximasApuestas."</td>";
+			$devuelve.= "<td style='background-color:".$bgColor."' nowrap>".$stringProximasApuestas."</td>";
 			$devuelve.= "</tr>";
 			$devuelve.= "<tr><td colspan='5'>";
 			$devuelve.= "<div id='detalle_".$clasificacion."' style='display:none'><p>".$porrista["string"]."</p></div>";
@@ -590,6 +583,12 @@ function clasificacion($tipo="completa") {
 	else {
 		$devuelve.= "<p>Todav&iacute;a no ha comenzado ".$NOMBRE_TORNEO." en Enroporra :)</p>";
 	}
+/*    %2CCLEMUS%2CKikogol%2CGaBrI%2Cjoliege%2CFloper%2CGenko%2CMeryta%2C
+			$colorDestacado = (strtolower($nickRegistrado)==strtolower($porrista["nick"])) ? "bgColor='#FFFF00'":"bgColor='$bgColor'";
+                        if (strtolower($nickRegistrado)!=strtolower($porrista["nick"]) && $GLOBALS["amigos"]!=1) {
+                            if (strpos(strtolower($_COOKIE["amigosEnro"]),",".strtolower($porrista["nick"]).",")!==false)
+                                $colorDestacado="bgColor='#DDAA33'";
+                        }*/
 
 	$WEB_ROOT=WEB_ROOT;
 	$devuelve.= <<< EOT
@@ -607,9 +606,11 @@ function clasificacion($tipo="completa") {
 		</script>
 EOT;
 
-    $f=fopen(FULL_TABLE_HTML,"w");
-    fwrite($f,$devuelve);
-    fclose($f);
+    if ($tipo=="completa") {
+        $f=fopen(FULL_TABLE_HTML,"w");
+        fwrite($f,$devuelve);
+        fclose($f);
+    }
 
 	return $devuelve;
 
