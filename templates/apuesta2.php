@@ -111,7 +111,7 @@ EOT;
 			$bandera1=WEB_ROOT."/images/ask.jpg";
 		}
 		else {
-			$nombre1=mb_strtoupper(substr($arra["equipo1"],0,3));
+            $nombre1=mb_strtoupper(mb_substr($arra["equipo1"],0,3));
 			$bandera1=WEB_ROOT."/images/badges/".$arra["bandera1"];
 		}
 		if ($arra["id_equipo2"]<=0) {
@@ -119,7 +119,7 @@ EOT;
 			$bandera2=WEB_ROOT."/images/ask.jpg";
 		}
 		else {
-			$nombre2=mb_strtoupper(substr($arra["equipo2"],0,3));
+			$nombre2=mb_strtoupper(mb_substr($arra["equipo2"],0,3));
 			$bandera2=WEB_ROOT."/images/badges/".$arra["bandera2"];
 		}
 
