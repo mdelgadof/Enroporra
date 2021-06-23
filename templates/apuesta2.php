@@ -147,7 +147,7 @@ EOT;
 	$query="SELECT * FROM arbitro ORDER BY nombre";
 	$res=bd_getAll($query,$conexion);
 	while ($arra=bd_fetch($res)) {
-		$optionsArbitros.="<option value='".$arra["id"]."'>".$arra["nombre"]."</option>";
+		$optionsArbitros.="<option value='".$arra["id"]."'>".$arra["nombre"]." (".$arra["pais"].")</option>";
 	}
 
 	echo "
