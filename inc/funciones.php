@@ -2,24 +2,24 @@
 
 function porra($id_porrista,$fase=1,$admin=false) {
 
-	global $conexion,$ID_ARBITRO_FINAL,$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE;
+	global $conexion,$ID_ARBITRO_FINAL,$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE,$ROTULOS_ELIMINATORIAS;
 
 	$query="SELECT j.id,j.nombre,e.nombre pais, e.bandera FROM equipo e,jugador j,porrista p WHERE j.id_equipo=e.id AND j.id=p.id_goleador AND p.id='".$id_porrista."'";
 	if ($fase>1) $query="SELECT j.id,j.nombre,e.nombre pais, e.bandera, a.nombre arbitro FROM equipo e,jugador j,porrista p,arbitro a WHERE j.id_equipo=e.id AND j.id=p.id_goleador AND a.id=p.id_arbitro AND p.id='".$id_porrista."'";
 	$res=bd_getAll($query,$conexion);
 	$arra=bd_fetch($res);
 
-        if ($fase>1 && date("Y-m-d H:i:s")<$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE && !$admin) {
-            if ($arra["arbitro"]!="") "Este jugador ha realizado ya su apuesta para la segunda fase. La ver&aacute;s cuando empiece el primer partido de las eliminatorias :)";
-            else echo "Este jugador todav&iacute;a no ha realizado su apuesta para la segunda fase.";
-            return;
-        }
+    if ($fase>1 && date("Y-m-d H:i:s")<$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE && !$admin) {
+        if ($arra["arbitro"]!="") echo "Este jugador ha realizado ya su apuesta para la segunda fase. La ver&aacute;s cuando empiece el primer partido de las eliminatorias :)";
+        else echo "Este jugador todav&iacute;a no ha realizado su apuesta para la segunda fase.";
+        return;
+    }
 
 	echo "<span class='red'><b>Pichichi:</b></span> <img src='".WEB_ROOT."/images/badges/".$arra["bandera"]."' width=16 height=16>&nbsp;".$arra["nombre"]." (".$arra["pais"].")<br>";
 	if ($fase>1) echo "<span class='red'><b>&Aacute;rbitro de la final:</b></span> ".$arra["arbitro"]."<br>";
 
 	$condicionFase = ($fase>1) ? " AND p.fase>1 ":" AND p.fase=1 ";
-	$query="SELECT e1.nombre nombre1, e1.bandera bandera1, e2.nombre nombre2, e2.bandera bandera2, a.resultado1, a.resultado2, p.fecha, p.hora, a.quiniela FROM apuesta a, equipo e1, equipo e2, partido p WHERE a.id_partido=p.id AND a.id_equipo1=e1.id AND a.id_equipo2=e2.id AND a.id_porrista='".$id_porrista."' ".$condicionFase." ORDER BY fecha,hora";
+	$query="SELECT e1.nombre nombre1, e1.bandera bandera1, e2.nombre nombre2, e2.bandera bandera2, a.resultado1, a.resultado2, p.fecha, p.hora, a.quiniela, p.fase FROM apuesta a, equipo e1, equipo e2, partido p WHERE a.id_partido=p.id AND a.id_equipo1=e1.id AND a.id_equipo2=e2.id AND a.id_porrista='".$id_porrista."' ".$condicionFase." ORDER BY fecha,hora";
 	$res=bd_getAll($query,$conexion);
 
 	while ($arra=bd_fetch($res)) {
@@ -27,7 +27,7 @@ function porra($id_porrista,$fase=1,$admin=false) {
 			$empate="(gana <b>".$arra["nombre".$arra["quiniela"]]."</b> por penaltis)";
 		}
 		else $empate="";
-		echo date("d/m/Y H:i",strtotime($arra["fecha"]." ".$arra["hora"]))." <img src='".WEB_ROOT."/images/badges/".$arra["bandera1"]."' width=16 height=16>&nbsp;".$arra["nombre1"]." <span class='red'><b>".$arra["resultado1"]."</b></span>&nbsp;<img src='".WEB_ROOT."/images/badges/".$arra["bandera2"]."' width=16 height=16>&nbsp;".$arra["nombre2"]." <span class='red'><b>".$arra["resultado2"]."</b></span> ".$empate."<br>";
+		echo $ROTULOS_ELIMINATORIAS[$arra["fase"]]." ".date("d/m/Y H:i",strtotime($arra["fecha"]." ".$arra["hora"]))." <img src='".WEB_ROOT."/images/badges/".$arra["bandera1"]."' width=16 height=16>&nbsp;".$arra["nombre1"]." <span class='red'><b>".$arra["resultado1"]."</b></span>&nbsp;<img src='".WEB_ROOT."/images/badges/".$arra["bandera2"]."' width=16 height=16>&nbsp;".$arra["nombre2"]." <span class='red'><b>".$arra["resultado2"]."</b></span> ".$empate."<br>";
 	}
 
 }

@@ -64,14 +64,11 @@
 		$query="UPDATE porrista SET id_arbitro='".intval($_POST["arbitro"])."' WHERE id='".$id_porrista."'";
 		$res=bd_getAll($query,$conexion);
 
-		if ($duplicada) {
-			echo "<p>Esta es la primera apuesta de <span class='red'>".strtoupper($nick)."</span> que figura en nuestra base de datos:</p>";
-			$id_porrista*=-1;
+		if (!$duplicada) {
+            echo "<h1 class='red'>Apuesta insertada</h1><br><br><p>OK, hemos insertado la apuesta de la segunda fase para el nick <span class='red'>".strtoupper($nick)."</span>. Aquí está el detalle:</p>";
+            echo porra($id_porrista,2,$admin=true);
 		}
-		else {
-			echo "<h1 class='red'>Apuesta insertada</h1><br><br><p>OK, hemos insertado la apuesta de la segunda fase para el nick <span class='red'>".strtoupper($nick)."</span>. Aquí está el detalle:</p>";
-		}
-		echo porra($id_porrista,2);
+
 		echo "<br><br>";
 		exit();
 	}
