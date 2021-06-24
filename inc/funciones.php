@@ -63,19 +63,20 @@ function puntos($id_porrista) {
 	$puntosQuiniela[2]=2;
 	$puntosQuiniela[3]=3;
 	$puntosQuiniela[4]=4;
-	$puntosQuiniela[5]=5;
-	$puntosQuiniela[6]=0; // 3er puesto
+	$puntosQuiniela[5]=0; // 3er puesto
+    $puntosQuiniela[6]=5;
 	$puntosResultado[1]=1.5;
 	$puntosResultado[2]=3;
 	$puntosResultado[3]=4.5;
 	$puntosResultado[4]=6;
-	$puntosResultado[5]=7.5;
+    $puntosResultado[5]=0;
+	$puntosResultado[6]=7.5;
 	$rotulo[1]="PRIMERA FASE";
 	$rotulo[2]="OCTAVOS DE FINAL";
 	$rotulo[3]="CUARTOS DE FINAL";
 	$rotulo[4]="SEMIFINAL";
-	$rotulo[5]="FINAL";
-	$rotulo[6]="TERCER Y CUARTO PUESTO";
+    $rotulo[5]="TERCER Y CUARTO PUESTO";
+	$rotulo[6]="FINAL";
 
 	if ($id_arbitro==$ID_ARBITRO_FINAL) {
 

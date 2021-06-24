@@ -18,8 +18,8 @@ if ($_GET["accion"]=="ver") {
 		}
 		else {
 			echo "<h1 class='red'>Apuesta de ".$arra["nombre"]." ".$arra["apellido"]."</h1><br><br>";
-                        if (date("Y-m-d H:i:s")<=$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE && date("Y-m-d H:i:s")>=$FECHA_APERTURA_PORRA_SEGUNDA_FASE) 
-				echo "Para que nadie juegue con ventaja, no se publicar�n las apuestas de la segunda fase hasta que empiecen las eliminatorias.";
+            if (date("Y-m-d H:i:s")<=$FECHA_PRIMER_PARTIDO_SEGUNDA_FASE && date("Y-m-d H:i:s")>=$FECHA_APERTURA_PORRA_SEGUNDA_FASE)
+				echo "Para que nadie juegue con ventaja, no se publicarán las apuestas de la segunda fase hasta que empiecen las eliminatorias.";
 			else {
 				echo "<h1>Segunda fase</h1><br>";
 				echo porra($arra["id"],2);

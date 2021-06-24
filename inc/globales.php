@@ -19,6 +19,6 @@ $FECHA_APERTURA_PORRA_SEGUNDA_FASE="2021-06-23 23:15:00";
 $ROTULOS_ELIMINATORIAS=array("","","OCTAVOS","CUARTOS","SEMIS","","FINAL");
 $ID_ARBITRO_FINAL=0;
 $NOMBRE_ARBITRO_FINAL="";
-$PAIS_ARBITRO_FINAL="";
-$ARRAY_PICHICHIS=array();
+$PAIS_ARBITRO_FINAL=""; // Nombre del archivo de la bandera, sin la extensión
+$ARRAY_PICHICHIS=array(); // Ids de goleador
 ?>
