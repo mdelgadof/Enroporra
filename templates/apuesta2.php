@@ -67,6 +67,7 @@
 		if (!$duplicada) {
             echo "<h1 class='red'>Apuesta insertada</h1><br><br><p>OK, hemos insertado la apuesta de la segunda fase para el nick <span class='red'>".strtoupper($nick)."</span>. Aquí está el detalle:</p>";
             echo porra($id_porrista,2,$admin=true);
+            unlink(FULL_TABLE_HTML);
 		}
 
 		echo "<br><br>";
