@@ -1,4 +1,10 @@
 <?php
+
+    if (intval($_GET["apuesta"])>0) {
+        echo porra($_GET["apuesta"],2,true);
+        exit();
+    }
+
 	if ($_POST["accion"]=="insertar") {
 
 		$nick=trim(str_replace("'","",$_POST["nick"]));
