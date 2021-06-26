@@ -26,7 +26,12 @@ function porra($id_porrista,$fase=1,$admin=false) {
 		if ($arra["resultado1"]==$arra["resultado2"] && $fase>1) {
 			$empate="(gana <b>".$arra["nombre".$arra["quiniela"]]."</b> por penaltis)";
 		}
-		else $empate="";
+        else $empate="";
+        if ($arra["resultado1"]==-1 && $arra["resultado2"]==-1 && $fase>1) {
+            $empate="(Apuesta de este partido anulada por la comisión)";
+            $arra["resultado1"]=$arra["resultado2"]="";
+        }
+
 		echo $ROTULOS_ELIMINATORIAS[$arra["fase"]]." ".date("d/m/Y H:i",strtotime($arra["fecha"]." ".$arra["hora"]))." <img src='".WEB_ROOT."/images/badges/".$arra["bandera1"]."' width=16 height=16>&nbsp;".$arra["nombre1"]." <span class='red'><b>".$arra["resultado1"]."</b></span>&nbsp;<img src='".WEB_ROOT."/images/badges/".$arra["bandera2"]."' width=16 height=16>&nbsp;".$arra["nombre2"]." <span class='red'><b>".$arra["resultado2"]."</b></span> ".$empate."<br>";
 	}
 
