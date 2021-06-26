@@ -30,8 +30,7 @@
 			if (substr($clave,0,14)=="nuevogoleador_" && $valor) {
 				$temp=explode("_",$clave);
 				$query="INSERT INTO jugador SET nombre='".str_replace("'","",$valor)."', id_equipo='".$temp[1]."'";
-				$res=bd_getAll($query,$conexion);
-				$id_jugador=bd_insert();
+				$id_jugador=bd_insert($query,$conexion);
 				$query="INSERT INTO goles SET id_goleador='".$id_jugador."',id_partido='".$temp[2]."'";
 				$res=bd_getAll($query,$conexion);
 			}
@@ -44,7 +43,8 @@
 			else if ($resultado[1]<$resultado[2]) $quiniela="2";
 			else {
 				if ($_POST["fase"]==1) $quiniela="X";
-				else $quiniela=$_POST["q_".$partido];
+				else if ($resultado[1]>-1) $quiniela=$_POST["q_".$partido];
+                else $quiniela="X";
 			}
 
 			$query="UPDATE partido SET resultado1='".$resultado[1]."',resultado2='".$resultado[2]."',quiniela='".$quiniela."' WHERE id='".$partido."'";
