@@ -58,11 +58,10 @@ You can also purchase a PSD-file for this template.
 				
 					if ($apuesta!=1 && $apuesta2!=1) {
 					
-						echo "<h1 class='red'>Pr&oacute;ximos partidos</h1>(Nota: puedes consultar los <a href='".$ENLACE_PARTIDOS."' target='_blank'>partidos</a> y la <a href='".$ENLACE_GOLEADORES."' target='_blank'>clasificaci&oacute;n de goleadores</a> en la p&aacute;gina de la UEFA)<br><br>";
+						echo "<h1 class='red'>Próximos partidos</h1>(Nota: puedes consultar los <a href='".$ENLACE_PARTIDOS."' target='_blank'>partidos</a> y la <a href='".$ENLACE_GOLEADORES."' target='_blank'>clasificaci&oacute;n de goleadores</a> en la p&aacute;gina de la UEFA)<br><br>";
 						$horaHoy = (date("H")<2) ? "00:00:00":date("H:i:s",strtotime(date("Y-m-d H:i:s"))-7200);
 						
-						$query="SELECT id FROM partido WHERE ((fecha='".date("Y-m-d")."' AND hora>='".$horaHoy."') OR fecha>'".date("Y-m-d")."') AND fase!=6 ORDER BY fecha, hora LIMIT 3";
-						//if ($_GET["test"]==1) echo $query."<br>";
+						$query="SELECT id FROM partido WHERE ((fecha='".date("Y-m-d")."' AND hora>='".$horaHoy."') OR fecha>'".date("Y-m-d")."') AND fase!=5 ORDER BY fecha, hora LIMIT 3";
 						$res=bd_getAll($query,$conexion);
 						echo "<div style='margin:auto'><table><tr>";
 						$contador=0;
@@ -70,7 +69,6 @@ You can also purchase a PSD-file for this template.
 							echo"<td valign='top'>".partido($arra["id"])."</td>";
 							echo"<td width=40></td>";
 							$contador++;
-							//if ($contador==2) echo "</tr><tr>";
 						}
 						echo "</tr></table></div>";
 						
@@ -80,7 +78,6 @@ You can also purchase a PSD-file for this template.
 							echo "<br><h1 class='red'>&Uacute;ltimos partidos jugados</h1><br>";
 
 							$query="SELECT id FROM partido WHERE resultado1>=0 AND resultado2>=0 ORDER BY fecha DESC, hora DESC LIMIT 3";
-							//if ($_GET["test"]==1) echo $query."<br>";
 							$res=bd_getAll($query,$conexion);
 							echo "<div style='margin:auto'><table><tr>";
 							$contador=0;
