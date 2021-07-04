@@ -305,7 +305,14 @@ function partido($id_partido) {
 
 	else {
 
-		$pronosticos=array(); $totalPronosticos=0; $pronString="";
+		$pronosticos=$clasificados=array(); $totalPronosticos=0; $pronString="";
+
+        $query="SELECT id_equipo1,id_equipo2 FROM partido WHERE quiniela='X' and fase>1";
+        $res=bd_getAll($query,$conexion);
+        while ($arra=bd_fetch($res)) {
+            if ($arra["id_equipo1"]>0) $clasificados[]=$arra["id_equipo1"];
+            if ($arra["id_equipo2"]>0) $clasificados[]=$arra["id_equipo2"];
+        }
 
 		$query="SELECT id_equipo1,count(*) s FROM apuesta WHERE quiniela='1' AND id_partido='".$id_partido."' AND id_equipo1!=0 GROUP BY id_equipo1";
 		$res=bd_getAll($query,$conexion);
@@ -324,7 +331,8 @@ function partido($id_partido) {
 			$query="SELECT nombre,bandera FROM equipo WHERE id='".$equipo."'";
 			$res=bd_getAll($query,$conexion);
 			$arra=bd_fetch($res);
-			$pronString.="<img src='".WEB_ROOT."/images/badges/".$arra["bandera"]."' width=20 height=20> ".$arra["nombre"].": <b>".number_format($pronostico*100/$totalPronosticos,1)."%</b><br>";
+            $colorClasificado = (in_array($equipo,$clasificados)) ? "style='background-color:#FFFF00'" : "";
+			$pronString.="<div ".$colorClasificado."><img style='position:relative;top:3px' src='".WEB_ROOT."/images/badges/".$arra["bandera"]."' width=20 height=20> ".$arra["nombre"].": <b>".number_format($pronostico*100/$totalPronosticos,1)."%</b></div>";
 		}
 
 	}
